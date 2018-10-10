@@ -12,7 +12,6 @@ export SCRAM_ARCH=slc6_amd64_gcc630 # !! or setenv SCRAM_ARCH slc6_amd64_gcc630
 cmsrel CMSSW_9_4_6_patch1
 cd CMSSW_9_4_6_patch1/src/
 cmsenv
-git cms-init
 
 # combining all repositories of interest
 git cms-merge-topic cms-nanoAOD:master
