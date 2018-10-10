@@ -16,8 +16,8 @@ git cms-init
 
 # combining all repositories of interest
 git cms-merge-topic cms-nanoAOD:master
-git clone https://github.com/vmilosev/nanoAOD-tools.git     $CMSSW_BASE/src/PhysicsTools/NanoAODTools
-git clone https://github.com/vmilosev/VBFHToInv-nanoAOD-tools.git $CMSSW_BASE/src/VBFHToInv/NanoAODTools
+git clone https://github.com/vukasinmilosevic/nanoAOD-tools.git     $CMSSW_BASE/src/PhysicsTools/NanoAODTools
+git clone https://github.com/vukasinmilosevic/VBFHToInv-nanoAOD-tools.git $CMSSW_BASE/src/VBFHToInv/NanoAODTools
 
 # compile the thing
 cd $CMSSW_BASE/src
