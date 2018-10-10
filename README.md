@@ -31,7 +31,7 @@ python PhysicsTools/NanoAODTools/scripts/nano_postproc.py $outDir $inputFile -I 
 Example:
 ```
 
-python PhysicsTools/NanoAODTools/scripts/nano_postproc.py /eos/user/v/vmilosev/test.root root://gfe02.grid.hep.ph.ic.ac.uk:1097//store/user/bkrikler/ttH_HToInvisible_M125_13TeV_powheg_pythia8/RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1_NanoAOD_1/180530_113050/0000/output_nanoaod_9.root -I  VBFHToInv.NanoAODTools.postprocessing.VBFHToInvModules JetMetMinDPhiConstructor
+python PhysicsTools/NanoAODTools/scripts/nano_postproc.py /eos/user/v/vmilosev/test root://gfe02.grid.hep.ph.ic.ac.uk:1097//store/user/bkrikler/ttH_HToInvisible_M125_13TeV_powheg_pythia8/RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1_NanoAOD_1/180530_113050/0000/output_nanoaod_9.root -I  VBFHToInv.NanoAODTools.postprocessing.VBFHToInvModules JetMetMinDPhiConstructor
 
 ```
 
