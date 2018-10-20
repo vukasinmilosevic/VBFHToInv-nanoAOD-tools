@@ -3,6 +3,8 @@
 #adding specific VBF variables to the trees
 from VBFHToInv.NanoAODTools.postprocessing.modules.dijetVar import DiJetVariableConstructor
 from VBFHToInv.NanoAODTools.postprocessing.modules.jetMetmindphi import JetMetMinDPhiConstructor
+from VBFHToInv.NanoAODTools.postprocessing.modules.MetCleaning import MetCleaningConstructor
+
 
 #btagging weights - give event weight automatically based on jets discri (so all working points automatically)
 from PhysicsTools.NanoAODTools.postprocessing.modules.btv.btagSFProducer import btagSF2017

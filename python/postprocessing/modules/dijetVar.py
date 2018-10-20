@@ -3,6 +3,7 @@ ROOT.PyConfig.IgnoreCommandLineOptions = True
 
 from PhysicsTools.NanoAODTools.postprocessing.framework.datamodel import Collection 
 from PhysicsTools.NanoAODTools.postprocessing.framework.eventloop import Module
+from PhysicsTools.NanoAODTools.postprocessing.tools import *
 
 class DiJetVar(Module):
     def __init__(self, jetCollectionName):
@@ -28,8 +29,8 @@ class DiJetVar(Module):
         if (len(jets)>=2):
            eventSum += (jets[0].p4()+jets[1].p4())
            self.out.fillBranch("leading_Mjj",eventSum.M())
-           self.out.fillBranch("leading_dPhijj", eventSum.Phi())
-           self.out.fillBranch("leading_dEtajj", abs(eventSum.Eta()))
+           self.out.fillBranch("leading_dPhijj", deltaPhi(jets[0].p4().Phi(), jets[1].p4().Phi()))
+           self.out.fillBranch("leading_dEtajj", abs(jets[0].p4().Eta()-jets[1].p4().Eta()))
         else:
 	   self.out.fillBranch("leading_Mjj",-1000)
            self.out.fillBranch("leading_dPhijj", -1000)
