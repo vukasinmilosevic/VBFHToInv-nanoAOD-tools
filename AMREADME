@@ -1,0 +1,53 @@
+********************************************
+Testing locally the crab config
+********************************************
+- all scripts in crab/
+- on data or mc: just change file path in PSet.py
+- to copy a test file:
+-- find path from DBS
+xrdcp root://cmsxrootd.fnal.gov//store/mc/RunIIFall17NanoAOD/EWKZ2Jets_ZToLL_M-50_TuneCP5_13TeV-madgraph-pythia8/NANOAODSIM/PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/20000/46AAFB79-3A43-E811-B359-0025905A60BE.root /eos/user/a/amagnan/EWKZ2Jets_ZToLL_12Apr2018_94X_nanoAOD_test.root
+
+> python crab_script_vbf_data.py 1
+
+- make sure any external file is given as a relative path compared to $CMSSW_BASE or compared to crab directory ?? --> to be tested for leptonSF files for example...
+
+
+*******************************************
+Instructions for making data pileup files
+*******************************************
+- see https://twiki.cern.ch/twiki/bin/view/CMS/PileupJSONFileforData
+- need package  RecoLuminosity/LumiDB  to have  pileupCalc.py tool.
+- inside data/pileup: copy Cert_lumi file, and pileup_latest.txt json files.
+
+- central value:
+> pileupCalc.py -i Cert_294927-306462_13TeV_EOY2017ReReco_Collisions17_JSON_v1.txt --inputLumiJSON pileup_latest.txt --calcMode true --minBiasXsec 69200 --maxPileupBin 80 --numPileupBins 800 --pileupHistName=pileup  RerecoData2017.root
+
+- up and down variations:
+> pileupCalc.py -i Cert_294927-306462_13TeV_EOY2017ReReco_Collisions17_JSON_v1.txt --inputLumiJSON pileup_latest.txt --calcMode true --minBiasXsec 72383 --maxPileupBin 80 --numPileupBins 800 --pileupHistName=pileup_plus  RerecoData2017_up.root
+> pileupCalc.py -i Cert_294927-306462_13TeV_EOY2017ReReco_Collisions17_JSON_v1.txt --inputLumiJSON pileup_latest.txt --calcMode true --minBiasXsec 66017 --maxPileupBin 80 --numPileupBins 800 --pileupHistName=pileup_minus  RerecoData2017_down.root
+
+> hadd RerecoData2017withSysts.root RerecoData2017.root RerecoData2017_up.root RerecoData2017_down.root
+- update path to input files in: VBFHToInvModules.py
+
+***************************************************
+POG recipes and SF files for electrons and muons
+***************************************************
+- https://twiki.cern.ch/twiki/bin/viewauth/CMS/Egamma2017DataRecommendations
+- https://twiki.cern.ch/twiki/bin/view/CMS/MuonReferenceEffs2017
+
+*************************************************
+Calculating the luminosity
+*************************************************
+https://cms-service-lumi.web.cern.ch/cms-service-lumi/brilwsdoc.html
+
+- from a clean shell on lxplus:
+-- check (or remove if old to be sure) no $HOME/.local/ brilws stuff there.
+> export PATH=$HOME/.local/bin:/afs/cern.ch/cms/lumi/brilconda-1.1.7/bin:$PATH
+> pip install --install-option="--prefix=$HOME/.local" brilws
+> brilcalc lumi  --normtag /cvmfs/cms-bril.cern.ch/cms-lumi-pog/Normtags/normtag_PHYSICS.json -i Cert_294927-306462_13TeV_EOY2017ReReco_Collisions17_JSON_v1.txt
+
+> replace Cert_XX by the output "processedLumis.json" of the data jobs from crab report. 
+
+
+
+
