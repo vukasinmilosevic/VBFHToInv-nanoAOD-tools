@@ -1,4 +1,5 @@
 #Import all the modules defined in /modules
+import os
 
 #adding specific VBF variables to the trees
 from VBFHToInv.NanoAODTools.postprocessing.modules.dijetVar import DiJetVariableConstructor
