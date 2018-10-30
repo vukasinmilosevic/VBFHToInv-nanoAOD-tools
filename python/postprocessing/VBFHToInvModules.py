@@ -7,7 +7,7 @@ from VBFHToInv.NanoAODTools.postprocessing.modules.jetMetmindphi import JetMetMi
 from VBFHToInv.NanoAODTools.postprocessing.modules.MetCleaning import MetCleaningConstructor
 from VBFHToInv.NanoAODTools.postprocessing.modules.lepSFProducer import lepSFtight
 from VBFHToInv.NanoAODTools.postprocessing.modules.lepSFProducer import lepSFveto
-
+from VBFHToInv.NanoAODTools.postprocessing.modules.trigger_selection import TriggerSelectionConstructor
 
 #btagging weights - give event weight automatically based on jets discri (so all working points automatically)
 from PhysicsTools.NanoAODTools.postprocessing.modules.btv.btagSFProducer import btagSF2017
