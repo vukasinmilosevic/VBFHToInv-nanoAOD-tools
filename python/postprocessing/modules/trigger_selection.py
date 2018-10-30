@@ -51,8 +51,6 @@ class TriggerSelection(Module):
         self.HLT_control_trigger_paths = [
             "HLT_IsoMu27",
 
-            "MET_MHT",
-
             "HLT_PFMETNoMu110_PFMHTNoMu110_IDTight",
             "HLT_PFMETNoMu120_PFMHTNoMu120_IDTight",
             "HLT_PFMETNoMu130_PFMHTNoMu130_IDTight",
