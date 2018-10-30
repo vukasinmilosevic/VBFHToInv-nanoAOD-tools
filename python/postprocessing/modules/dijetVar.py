@@ -37,8 +37,26 @@ class DiJetVar(Module):
            self.out.fillBranch("leading_dEtajj", -1000)
         return True
 
+def DiJetVariables(jets_pt, jets_eta, jets_phi, jets_m):
+    eventSum = ROOT.TLorentzVector()
+    jet1 = ROOT.TLorentzVector()
+    jet2 = ROOT.TLorentzVector()
+    if (len(jets_pt)>=2):
+        jet1.SetPtEtaPhiM(jets_pt[0],jets_eta[0],jets_phi[0],jets_m[0])
+        jet2.SetPtEtaPhiM(jets_pt[1],jets_eta[1],jets_phi[1],jets_m[1])
+        eventSum += (jet1+jet2)
+        leading_Mjj = eventSum.M()
+        leading_dPhijj = deltaPhi(jets_phi[0], jets_phi[1])
+        leading_dEtajj =  abs(jets_eta[0]-jets_eta[1])
+        return True, leading_Mjj, leading_dPhijj, leading_dEtajj
+    else:
+        return False, 0.0, 0.0, 0.0
+	
 
 # define modules using the syntax 'name = lambda : constructor' to avoid having them loaded when not needed
+
+
+
 
 DiJetVariableConstructor = lambda : DiJetVar(jetCollectionName= "Jet") 
  

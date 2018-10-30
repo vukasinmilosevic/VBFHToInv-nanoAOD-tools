@@ -39,6 +39,16 @@ class MetCleaning(Module):
         self.out.fillBranch("MetNo"+self.lepCollectionName+"_phi", math.atan(1.0*met_y/met_x))
         return True
 
+def MetCleaningProcedure(met_pt, met_phi, leptons):
+    met_x = met_pt*math.cos(met_phi)
+    met_y = met_pt*math.sin(met_phi)
+    if len(leptons)>0:
+           for lep in leptons :
+              met_x+=lep.pt*math.cos(lep.phi)
+              met_y+=lep.pt*math.sin(lep.phi)
+
+    CleanMet = math.sqrt(met_x**2+met_y**2)
+    return True, CleanMet, math.atan(1.0*met_y/met_x)
 
 # define modules using the syntax 'name = lambda : constructor' to avoid having them loaded when not needed
 

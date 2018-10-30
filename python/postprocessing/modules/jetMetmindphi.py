@@ -40,6 +40,27 @@ class JetMetMinDPhi(Module):
            self.out.fillBranch("JetMetMin_dPhijj", -1000)
         return True
 
+def FormJetMetMinDphi(met_phi, jet_phi, n_jets):
+    if (n_jets>0 and met_phi):
+        Min = 1000000
+        if n_jets>=4:
+            indx = 4
+        else:
+            indx = n_jets
+        
+        for i  in range(0,indx):
+            phi = abs(jet_phi[i]-met_phi)    
+            if (Min>phi):
+                Min = phi
+
+        if (Min==1000000):
+           return False, 0.0
+        else:
+           return True, Min
+    else:
+        return False, 0.0
+
+
 
 # define modules using the syntax 'name = lambda : constructor' to avoid having them loaded when not needed
 
