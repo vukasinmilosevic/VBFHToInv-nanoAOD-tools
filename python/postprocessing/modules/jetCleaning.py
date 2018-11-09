@@ -35,6 +35,8 @@ class JetCleaning(Module):
         self.out.branch("MetNoMu_phi", "F");
         self.out.branch("MetNoEl_pt", "F");
         self.out.branch("MetNoEl_phi", "F");
+        self.out.branch("MetNoLep_pt", "F");
+        self.out.branch("MetNoLep_phi", "F");
         self.out.branch("jetmet_nomu_midphi","F");
         self.out.branch("jetmet_noel_midphi","F")
 
@@ -59,9 +61,9 @@ class JetCleaning(Module):
            for electron in electrons:
               if (deltaR(jet.eta, jet.phi, electron.eta, electron.phi)< self.dR_min):
                  test =False
-           for photon in photons:
-              if (deltaR(jet.eta, jet.phi, photon.eta, photon.phi)< self.dR_min):
-                 test =False
+          # for photon in photons:
+           #   if (deltaR(jet.eta, jet.phi, photon.eta, photon.phi)< self.dR_min):
+            #     test =False
 
            if test:
              cleanJets_pt.append(jet.pt)
@@ -79,14 +81,15 @@ class JetCleaning(Module):
                  
         Event_ok_cleanMet_electrons, CleanMet_electrons_pt, CleanMet_electrons_phi = MetCleaningProcedure(met_pt, met_phi, electrons)
         Event_ok_cleanMet_muons, CleanMet_muons_pt, CleanMet_muons_phi =  MetCleaningProcedure(met_pt, met_phi, muons) 
+        Event_ok_cleanMet_leptons, CleanMet_leptons_pt, CleanMet_leptons_phi =  MetCleaningProcedure(CleanMet_muons_pt,CleanMet_muons_phi, electrons)
         Event_ok_jet_met_Nomu, MinDPhiJMet_Nomu = FormJetMetMinDphi(CleanMet_muons_phi, cleanJets_phi, len(cleanJets_phi))
         Event_ok_jet_met_Noel, MinDPhiJMet_Noel = FormJetMetMinDphi(CleanMet_electrons_phi, cleanJets_phi,len(cleanJets_phi))
- 
+        Event_ok_jet_met_Nolep, MinDPhiJMet_Nolep = FormJetMetMinDphi(CleanMet_leptons_phi, cleanJets_phi,len(cleanJets_phi)) 
     
-        selection = len(cleanJets_pt)>=2 and leading_Mjj>300 and leading_dEtajj>1 and MinDPhiJMet_Nomu>0.5 and CleanMet_muons_pt>150
+        selection = len(cleanJets_pt)>=2 and leading_Mjj>300 and leading_dEtajj>1 and MinDPhiJMet_Nolep>0.5 and CleanMet_leptons_pt>150
        # selection = True
 
-        if Event_ok_cleanJets and Event_ok_cleanMet_electrons and Event_ok_cleanMet_muons and Event_ok_jet_met_Nomu and Event_ok_jet_met_Noel and selection:
+        if Event_ok_cleanJets and Event_ok_cleanMet_electrons and Event_ok_cleanMet_muons and Event_ok_jet_met_Nomu and Event_ok_jet_met_Noel and Event_ok_cleanMet_leptons and Event_ok_jet_met_Nolep  and selection:
             self.out.fillBranch(self.outCollectionName+"_pt", cleanJets_pt)
             self.out.fillBranch(self.outCollectionName+"_eta", cleanJets_eta)
             self.out.fillBranch(self.outCollectionName+"_phi", cleanJets_phi)
@@ -98,7 +101,8 @@ class JetCleaning(Module):
             self.out.fillBranch("MetNoMu_phi", CleanMet_muons_phi)
             self.out.fillBranch("MetNoEl_pt", CleanMet_electrons_pt)
             self.out.fillBranch("MetNoEl_phi", CleanMet_electrons_phi)
-            self.out.fillBranch("MetNoMu_pt", CleanMet_muons_pt)
+            self.out.fillBranch("MetNoLep_pt", CleanMet_leptons_pt)
+            self.out.fillBranch("MetNoLep_phi", CleanMet_leptons_phi)
             self.out.fillBranch("jetmet_nomu_midphi", MinDPhiJMet_Nomu)
             self.out.fillBranch("jetmet_noel_midphi", MinDPhiJMet_Noel)
             return True
