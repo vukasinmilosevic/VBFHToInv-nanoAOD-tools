@@ -1,0 +1,6 @@
+<use name="roottmva"/>
+<use name="hepmc"/>
+<use name="PhysicsTools/NanoAODTools"/>
+<export>
+  <lib   name="1"/>
+</export>

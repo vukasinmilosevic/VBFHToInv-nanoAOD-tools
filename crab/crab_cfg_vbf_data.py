@@ -17,9 +17,9 @@ config.section_("Data")
 #config.Data.inputDBS = 'phys03'
 config.Data.inputDBS = 'global'
 config.Data.splitting = 'FileBased'
-config.Data.splitting = 'EventAwareLumiBased'
-config.Data.unitsPerJob = 100000
-#config.Data.unitsPerJob = 2
+#config.Data.splitting = 'EventAwareLumiBased'
+#config.Data.unitsPerJob = 100000
+config.Data.unitsPerJob = 2
 #config.Data.totalUnits = 10
 
 config.Data.outLFNDirBase = '/store/user/amagnan/VBF2017/Data/181025'

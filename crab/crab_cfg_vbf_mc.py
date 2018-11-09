@@ -4,7 +4,7 @@ from CRABClient.UserUtilities import config, getUsernameFromSiteDB
 config = Configuration()
 
 config.section_("General")
-config.General.requestName = 'NanoPost6'
+config.General.requestName = 'DYJetsToLL_1J_NLO'
 config.General.transferLogs=True
 config.section_("JobType")
 config.JobType.pluginName = 'Analysis'
