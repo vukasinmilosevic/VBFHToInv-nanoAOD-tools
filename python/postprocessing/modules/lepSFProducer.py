@@ -55,12 +55,14 @@ class lepSFProducer(Module):
         self.el_h = ROOT.std.vector(str)(len(el_f))
         for i in range(len(el_f)): self.el_f[i] = el_f[i]; self.el_h[i] = el_h[i];
 
-        if "/LeptonEfficiencyCorrector_cc.so" not in ROOT.gSystem.GetLibraries():
-            print "Load C++ Worker"
-            ROOT.gROOT.ProcessLine(".L %s/src/PhysicsTools/NanoAODTools/python/postprocessing/helpers/LeptonEfficiencyCorrector.cc+" % os.environ['CMSSW_BASE'])
+        for library in [ "libCondFormatsJetMETObjects", "libVBFHToInvNanoAODTools" ]:
+            if library not in ROOT.gSystem.GetLibraries():
+                print("Load Library '%s'" % library.replace("lib", ""))
+                ROOT.gSystem.Load(library)
+
     def beginJob(self):
-        self._worker_mu = ROOT.LeptonEfficiencyCorrector(self.mu_f,self.mu_h)
-        self._worker_el = ROOT.LeptonEfficiencyCorrector(self.el_f,self.el_h)
+        self._worker_mu = ROOT.LeptonEfficiencyCorrectorCppWorker(self.mu_f,self.mu_h)
+        self._worker_el = ROOT.LeptonEfficiencyCorrectorCppWorker(self.el_f,self.el_h)
     def endJob(self):
         pass
     def beginFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
@@ -84,4 +86,3 @@ class lepSFProducer(Module):
 lepSFveto = lambda : lepSFProducer( '2017', 'Loose', 'Veto')
 #lepSFvetotrig = lambda : lepSFProducer( '2017', 'Loose_withTrg', 'Veto')
 lepSFtight = lambda : lepSFProducer( '2017', 'Tight', 'Tight')
-

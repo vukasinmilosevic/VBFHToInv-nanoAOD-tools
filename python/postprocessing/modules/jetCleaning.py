@@ -37,8 +37,9 @@ class JetCleaning(Module):
         self.out.branch("MetNoEl_phi", "F");
         self.out.branch("MetNoLep_pt", "F");
         self.out.branch("MetNoLep_phi", "F");
-        self.out.branch("jetmet_nomu_midphi","F");
-        self.out.branch("jetmet_noel_midphi","F")
+        self.out.branch("jetmet_nomu_mindphi","F");
+        self.out.branch("jetmet_noel_mindphi","F")
+        self.out.branch("jetmet_nolep_mindphi","F")
 
     def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         pass
@@ -103,8 +104,9 @@ class JetCleaning(Module):
             self.out.fillBranch("MetNoEl_phi", CleanMet_electrons_phi)
             self.out.fillBranch("MetNoLep_pt", CleanMet_leptons_pt)
             self.out.fillBranch("MetNoLep_phi", CleanMet_leptons_phi)
-            self.out.fillBranch("jetmet_nomu_midphi", MinDPhiJMet_Nomu)
-            self.out.fillBranch("jetmet_noel_midphi", MinDPhiJMet_Noel)
+            self.out.fillBranch("jetmet_nomu_mindphi", MinDPhiJMet_Nomu)
+            self.out.fillBranch("jetmet_noel_mindphi", MinDPhiJMet_Noel)
+            self.out.fillBranch("jetmet_nolep_mindphi",MinDPhiJMet_Nolep)
             return True
         else:
             return False
