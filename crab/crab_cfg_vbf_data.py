@@ -58,17 +58,23 @@ if 1 == 1:
 
     tasks=list()
     #Runs
-    tasks.append(('MET-2017B-12Nov18-filebased','/MET/Run2017B-31Mar2018-v1/NANOAOD'))
-    tasks.append(('MET-2017C-12Nov18-filebased','/MET/Run2017C-31Mar2018-v1/NANOAOD'))
-    tasks.append(('MET-2017D-12Nov18-filebased','/MET/Run2017D-31Mar2018-v1/NANOAOD'))
-    tasks.append(('MET-2017E-12Nov18-filebased','/MET/Run2017E-31Mar2018-v1/NANOAOD'))
-    tasks.append(('MET-2017F-12Nov18-filebased','/MET/Run2017F-31Mar2018-v1/NANOAOD'))
+    #tasks.append(('MET-2017B-12Nov18-filebased','/MET/Run2017B-31Mar2018-v1/NANOAOD'))
+    #tasks.append(('MET-2017C-12Nov18-filebased','/MET/Run2017C-31Mar2018-v1/NANOAOD'))
+    #tasks.append(('MET-2017D-12Nov18-filebased','/MET/Run2017D-31Mar2018-v1/NANOAOD'))
+    #tasks.append(('MET-2017E-12Nov18-filebased','/MET/Run2017E-31Mar2018-v1/NANOAOD'))
+    #tasks.append(('MET-2017F-12Nov18-filebased','/MET/Run2017F-31Mar2018-v1/NANOAOD'))
     
-    tasks.append(('SingleMuon-2017B-12Nov18-filebased','/SingleMuon/Run2017B-31Mar2018-v1/NANOAOD'))
-    tasks.append(('SingleMuon-2017C-12Nov18-filebased','/SingleMuon/Run2017C-31Mar2018-v1/NANOAOD'))
-    tasks.append(('SingleMuon-2017D-12Nov18-filebased','/SingleMuon/Run2017D-31Mar2018-v1/NANOAOD'))
-    tasks.append(('SingleMuon-2017E-12Nov18-filebased','/SingleMuon/Run2017E-31Mar2018-v1/NANOAOD'))
-    tasks.append(('SingleMuon-2017F-12Nov18-filebased','/SingleMuon/Run2017F-31Mar2018-v1/NANOAOD'))    
+    #tasks.append(('SingleMuon-2017B-12Nov18-filebased','/SingleMuon/Run2017B-31Mar2018-v1/NANOAOD'))
+    #tasks.append(('SingleMuon-2017C-12Nov18-filebased','/SingleMuon/Run2017C-31Mar2018-v1/NANOAOD'))
+    #tasks.append(('SingleMuon-2017D-12Nov18-filebased','/SingleMuon/Run2017D-31Mar2018-v1/NANOAOD'))
+    #tasks.append(('SingleMuon-2017E-12Nov18-filebased','/SingleMuon/Run2017E-31Mar2018-v1/NANOAOD'))
+    #tasks.append(('SingleMuon-2017F-12Nov18-filebased','/SingleMuon/Run2017F-31Mar2018-v1/NANOAOD'))
+    
+    tasks.append(('SingleElectron-2017B-12Nov18-filebased','/SingleElectron/Run2017B-31Mar2018-v1/NANOAOD'))
+    tasks.append(('SingleElectron-2017C-12Nov18-filebased','/SingleElectron/Run2017C-31Mar2018-v1/NANOAOD'))
+    tasks.append(('SingleElectron-2017D-12Nov18-filebased','/SingleElectron/Run2017D-31Mar2018-v1/NANOAOD'))
+    tasks.append(('SingleElectron-2017E-12Nov18-filebased','/SingleElectron/Run2017E-31Mar2018-v1/NANOAOD'))
+    tasks.append(('SingleElectron-2017F-12Nov18-filebased','/SingleElectron/Run2017F-31Mar2018-v1/NANOAOD'))
  
     for task in tasks:
         print task[0]
