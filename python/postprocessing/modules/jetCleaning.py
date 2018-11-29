@@ -54,7 +54,7 @@ class JetCleaning(Module):
         cleanJets_phi = []
         cleanJets_mass = []
 	
-	cleanMuons = []
+        cleanMuons = []
         cleanElectrons = []
 	
         for jet in jets:
@@ -67,15 +67,6 @@ class JetCleaning(Module):
 
             if not((abs(jet.eta)<=2.7 and ((jet.jetId & 0x4) > 0 )) or (abs(jet.eta) > 2.7 and ((jet.jetId & 0x2) > 0 ))):
 	        continue
-	  # for muon in muons:
-          #    if (deltaR(jet.eta, jet.phi, muon.eta, muon.phi)< self.dR_min):
-          #       test =False
-          # for electron in electrons:
-          #    if (deltaR(jet.eta, jet.phi, electron.eta, electron.phi)< self.dR_min):
-          #       test =False
-          # for photon in photons:
-           #   if (deltaR(jet.eta, jet.phi, photon.eta, photon.phi)< self.dR_min):
-            #     test =False
 
             cleanJets_pt.append(jet.pt)
             cleanJets_eta.append(jet.eta)
@@ -87,7 +78,7 @@ class JetCleaning(Module):
         muons = Collection(event, "Muon")
         electrons = Collection(event, "Electron")
         
-	for muon in muons:
+        for muon in muons:
             if (abs(muon.eta)<2.4 and muon.pt > 10 and muon.pfRelIso04_all < 0.25):
                 cleanMuons.append(muon)
          
@@ -95,7 +86,7 @@ class JetCleaning(Module):
             if (electron.convVeto == True and (electron.cutBased == 1) and electron.pt > 10 and abs(electron.eta) < 2.5):
                 cleanElectrons.append(electron)
        
-	met = Object(event, "MET")
+        met = Object(event, "MET")
         met_phi = met.phi
         met_pt = met.pt
                  
