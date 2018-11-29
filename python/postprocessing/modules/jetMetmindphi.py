@@ -3,6 +3,7 @@ ROOT.PyConfig.IgnoreCommandLineOptions = True
 
 from PhysicsTools.NanoAODTools.postprocessing.framework.datamodel import Collection 
 from PhysicsTools.NanoAODTools.postprocessing.framework.eventloop import Module
+from PhysicsTools.NanoAODTools.postprocessing.tools import *
 
 class JetMetMinDPhi(Module):
     def __init__(self, jetCollectionName, metCollectionName):
@@ -49,7 +50,7 @@ def FormJetMetMinDphi(met_phi, jet_phi, n_jets):
             indx = n_jets
         
         for i  in range(0,indx):
-            phi = abs(jet_phi[i]-met_phi)    
+            phi = deltaPhi(jet_phi[i], met_phi)    
             if (Min>phi):
                 Min = phi
 

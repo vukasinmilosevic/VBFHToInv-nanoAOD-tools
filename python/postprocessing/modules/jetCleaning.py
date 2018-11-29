@@ -83,7 +83,7 @@ class JetCleaning(Module):
                 cleanMuons.append(muon)
          
         for electron in electrons:
-            if (electron.convVeto == True and (electron.cutBased == 1) and electron.pt > 10 and abs(electron.eta) < 2.5):
+            if (electron.convVeto == True and (electron.cutBased >= 1) and electron.pt > 10 and abs(electron.eta) < 2.5):
                 cleanElectrons.append(electron)
        
         met = Object(event, "MET")
