@@ -55,7 +55,12 @@ Basic selection criteria to apply
 *************************************************
 METfilters:
 ------------
-Flag_goodVertices>0 && Flag_globalSuperTightHalo2016Filter>0 && Flag_HBHENoiseFilter>0 && Flag_HBHENoiseIsoFilter>0 && Flag_EcalDeadCellTriggerPrimitiveFilter>0 && Flag_BadPFMuonFilter>0 && Flag_BadChargedCandidateFilter>0 && Flag_ecalBadCalibFilter>0
+Data and MC: 
+Flag_goodVertices>0 && Flag_globalSuperTightHalo2016Filter>0 && Flag_HBHENoiseFilter>0 && Flag_HBHENoiseIsoFilter>0 && Flag_EcalDeadCellTriggerPrimitiveFilter>0 && Flag_BadPFMuonFilter>0 && Flag_BadChargedCandidateFilter>0
+
++ in data only: && Flag_eeBadScFilter>0
+
+#?? To be updated: recipe to rerun on miniAOD.... Flag_ecalBadCalibFilter
 
 Bjets to veto:
 --------------
