@@ -50,7 +50,7 @@ def FormJetMetMinDphi(met_phi, jet_phi, n_jets):
             indx = n_jets
         
         for i  in range(0,indx):
-            phi = deltaPhi(jet_phi[i], met_phi)    
+            phi = abs(deltaPhi(jet_phi[i], met_phi))    
             if (Min>phi):
                 Min = phi
 
