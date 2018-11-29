@@ -4,7 +4,7 @@ from CRABClient.UserUtilities import config, getUsernameFromSiteDB
 config = Configuration()
 
 config.section_("General")
-config.General.requestName = 'Full_MET2017_dataset_121118_filebased'
+config.General.requestName = 'Full_MET2017_dataset_281118_filebased'
 config.General.transferLogs=True
 config.section_("JobType")
 config.JobType.pluginName = 'Analysis'
@@ -22,7 +22,7 @@ config.Data.unitsPerJob = 1
 #config.Data.unitsPerJob = 2
 #config.Data.totalUnits = 1
 
-config.Data.outLFNDirBase = '/store/user/vmilosev/HIG_EXO_12112018'
+config.Data.outLFNDirBase = '/store/user/vmilosev/HIG_EXOv2_28112018'
 config.Data.publication = False
 #config.Data.outputDatasetTag = 'NanoTestPost'
 config.section_("Site")
@@ -58,23 +58,23 @@ if 1 == 1:
 
     tasks=list()
     #Runs
-    #tasks.append(('MET-2017B-12Nov18-filebased','/MET/Run2017B-31Mar2018-v1/NANOAOD'))
-    #tasks.append(('MET-2017C-12Nov18-filebased','/MET/Run2017C-31Mar2018-v1/NANOAOD'))
-    #tasks.append(('MET-2017D-12Nov18-filebased','/MET/Run2017D-31Mar2018-v1/NANOAOD'))
-    #tasks.append(('MET-2017E-12Nov18-filebased','/MET/Run2017E-31Mar2018-v1/NANOAOD'))
-    #tasks.append(('MET-2017F-12Nov18-filebased','/MET/Run2017F-31Mar2018-v1/NANOAOD'))
+    tasks.append(('MET-2017B-28Nov18-filebased','/MET/Run2017B-31Mar2018-v1/NANOAOD'))
+    tasks.append(('MET-2017C-28Nov18-filebased','/MET/Run2017C-31Mar2018-v1/NANOAOD'))
+    tasks.append(('MET-2017D-28Nov18-filebased','/MET/Run2017D-31Mar2018-v1/NANOAOD'))
+    tasks.append(('MET-2017E-28Nov18-filebased','/MET/Run2017E-31Mar2018-v1/NANOAOD'))
+    tasks.append(('MET-2017F-28Nov18-filebased','/MET/Run2017F-31Mar2018-v1/NANOAOD'))
     
-    #tasks.append(('SingleMuon-2017B-12Nov18-filebased','/SingleMuon/Run2017B-31Mar2018-v1/NANOAOD'))
-    #tasks.append(('SingleMuon-2017C-12Nov18-filebased','/SingleMuon/Run2017C-31Mar2018-v1/NANOAOD'))
-    #tasks.append(('SingleMuon-2017D-12Nov18-filebased','/SingleMuon/Run2017D-31Mar2018-v1/NANOAOD'))
-    #tasks.append(('SingleMuon-2017E-12Nov18-filebased','/SingleMuon/Run2017E-31Mar2018-v1/NANOAOD'))
-    #tasks.append(('SingleMuon-2017F-12Nov18-filebased','/SingleMuon/Run2017F-31Mar2018-v1/NANOAOD'))
+    tasks.append(('SingleMuon-2017B-28Nov18-filebased','/SingleMuon/Run2017B-31Mar2018-v1/NANOAOD'))
+    tasks.append(('SingleMuon-2017C-28Nov18-filebased','/SingleMuon/Run2017C-31Mar2018-v1/NANOAOD'))
+    tasks.append(('SingleMuon-2017D-28Nov18-filebased','/SingleMuon/Run2017D-31Mar2018-v1/NANOAOD'))
+    tasks.append(('SingleMuon-2017E-28Nov18-filebased','/SingleMuon/Run2017E-31Mar2018-v1/NANOAOD'))
+    tasks.append(('SingleMuon-2017F-28Nov18-filebased','/SingleMuon/Run2017F-31Mar2018-v1/NANOAOD'))
     
-    tasks.append(('SingleElectron-2017B-12Nov18-filebased','/SingleElectron/Run2017B-31Mar2018-v1/NANOAOD'))
-    tasks.append(('SingleElectron-2017C-12Nov18-filebased','/SingleElectron/Run2017C-31Mar2018-v1/NANOAOD'))
-    tasks.append(('SingleElectron-2017D-12Nov18-filebased','/SingleElectron/Run2017D-31Mar2018-v1/NANOAOD'))
-    tasks.append(('SingleElectron-2017E-12Nov18-filebased','/SingleElectron/Run2017E-31Mar2018-v1/NANOAOD'))
-    tasks.append(('SingleElectron-2017F-12Nov18-filebased','/SingleElectron/Run2017F-31Mar2018-v1/NANOAOD'))
+    tasks.append(('SingleElectron-2017B-28Nov18-filebased','/SingleElectron/Run2017B-31Mar2018-v1/NANOAOD'))
+    tasks.append(('SingleElectron-2017C-28Nov18-filebased','/SingleElectron/Run2017C-31Mar2018-v1/NANOAOD'))
+    tasks.append(('SingleElectron-2017D-28Nov18-filebased','/SingleElectron/Run2017D-31Mar2018-v1/NANOAOD'))
+    tasks.append(('SingleElectron-2017E-28Nov18-filebased','/SingleElectron/Run2017E-31Mar2018-v1/NANOAOD'))
+    tasks.append(('SingleElectron-2017F-28Nov18-filebased','/SingleElectron/Run2017F-31Mar2018-v1/NANOAOD'))
  
     for task in tasks:
         print task[0]

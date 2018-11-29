@@ -60,6 +60,9 @@ class TriggerSelection(Module):
             "HLT_PFMETNoMu120_PFMHTNoMu120_IDTight_PFHT60",
 
             "HLT_PFHT1050",
+            "HLT_Ele27_WPTight_Gsf",
+	    "HLT_Ele35_WPTight_Gsf",
+            "HLT_Ele32_WPTight_Gsf_L1DoubleEG",
         ]
 
 

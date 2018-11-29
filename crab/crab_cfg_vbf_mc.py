@@ -4,7 +4,7 @@ from CRABClient.UserUtilities import config, getUsernameFromSiteDB
 config = Configuration()
 
 config.section_("General")
-config.General.requestName = 'Full_MC'
+config.General.requestName = 'Full_MC_correction_281118'
 config.General.transferLogs=True
 config.section_("JobType")
 config.JobType.pluginName = 'Analysis'
@@ -21,7 +21,7 @@ config.Data.splitting = 'FileBased'
 config.Data.unitsPerJob = 1
 #config.Data.totalUnits = 1
 
-config.Data.outLFNDirBase = '/store/user/vmilosev/HIG_EXO_12112018'
+config.Data.outLFNDirBase = '/store/user/vmilosev/HIG_EXOv2_28112018'
 config.Data.publication = False
 #config.Data.outputDatasetTag = 'NanoTestPost'
 config.section_("Site")
@@ -59,11 +59,11 @@ if 1 == 1:
     #Diboson
 
     tasks.append(('WW_TuneCP5','/WW_TuneCP5_13TeV-pythia8/RunIIFall17NanoAOD-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/NANOAODSIM'))
-    #tasks.append(('WW_TuneCUETP8M1v2','/WW_TuneCUETP8M1_13TeV-pythia8/RunIIFall17NanoAOD-PUMoriond17_94X_mcRun2_asymptotic_v2-v1/NANOAODSIM'))
+    tasks.append(('WW_TuneCUETP8M1v2','/WW_TuneCUETP8M1_13TeV-pythia8/RunIIFall17NanoAOD-PUMoriond17_94X_mcRun2_asymptotic_v2-v1/NANOAODSIM'))
     tasks.append(('WZ_TuneCP5','/WZ_TuneCP5_13TeV-pythia8/RunIIFall17NanoAOD-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/NANOAODSIM'))
-    #tasks.append(('WZ_TuneCUETP8M1v2','/WZ_TuneCUETP8M1_13TeV-pythia8/RunIIFall17NanoAOD-PUMoriond17_94X_mcRun2_asymptotic_v2-v1/NANOAODSIM'))
+    tasks.append(('WZ_TuneCUETP8M1v2','/WZ_TuneCUETP8M1_13TeV-pythia8/RunIIFall17NanoAOD-PUMoriond17_94X_mcRun2_asymptotic_v2-v1/NANOAODSIM'))
     tasks.append(('ZZ_TuneCP5','/ZZ_TuneCP5_13TeV-pythia8/RunIIFall17NanoAOD-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/NANOAODSIM'))
-    #tasks.append(('ZZ_TuneCUETP8M1v2','/ZZ_TuneCUETP8M1_13TeV-pythia8/RunIIFall17NanoAOD-PUMoriond17_94X_mcRun2_asymptotic_v2-v1/NANOAODSIM'))
+    tasks.append(('ZZ_TuneCUETP8M1v2','/ZZ_TuneCUETP8M1_13TeV-pythia8/RunIIFall17NanoAOD-PUMoriond17_94X_mcRun2_asymptotic_v2-v1/NANOAODSIM'))
     
     
     #DY
@@ -93,21 +93,7 @@ if 1 == 1:
     tasks.append(('EWKZ2Jets_ZToLL_M-50','/EWKZ2Jets_ZToLL_M-50_TuneCP5_13TeV-madgraph-pythia8/RunIIFall17NanoAOD-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/NANOAODSIM'))
     tasks.append(('EWKZ2Jets_ZToNuNu','/EWKZ2Jets_ZToNuNu_TuneCP5_13TeV-madgraph-pythia8/RunIIFall17NanoAOD-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/NANOAODSIM'))
 
-	#GJets
 
-    tasks.append(('GJets_HT-600ToInf','/GJets_HT-600ToInf_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIFall17NanoAOD-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/NANOAODSIM'))
-    tasks.append(('GJets_HT-40To100','/GJets_HT-40To100_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIFall17NanoAOD-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/NANOAODSIM'))
-    tasks.append(('GJets_HT-40To100-ext','/GJets_HT-40To100_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIFall17NanoAOD-PU2017_12Apr2018_1core_94X_mc2017_realistic_v14_ext1-v2/NANOAODSIM'))
-	#tasks.append(('GJets_HT-40To100-extv1','/GJets_HT-40To100_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIFall17NanoAOD-PU2017_12Apr2018_1core_94X_mc2017_realistic_v14_ext1-v1/NANOAODSIM'))
-    tasks.append(('GJets_HT-400To600','/GJets_HT-400To600_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIFall17NanoAOD-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v1/NANOAODSIM'))
-    tasks.append(('GJets_HT-200To400','/GJets_HT-200To400_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIFall17NanoAOD-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/NANOAODSIM'))
-	#tasks.append(('GJets_HT-200To400v1','/GJets_HT-200To400_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIFall17NanoAOD-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/NANOAODSIM'))
-    tasks.append(('GJets_HT-100To200','/GJets_HT-100To200_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIFall17NanoAOD-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/NANOAODSIM'))
-
-    tasks.append(('GJets_DR-0p4_HT-200To400','/GJets_DR-0p4_HT-200To400_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIFall17NanoAOD-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/NANOAODSIM'))
-    tasks.append(('GJets_DR-0p4_HT-400To600','/GJets_DR-0p4_HT-400To600_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIFall17NanoAOD-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/NANOAODSIM'))
-    tasks.append(('GJets_DR-0p4_HT-40To100','/GJets_DR-0p4_HT-40To100_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIFall17NanoAOD-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/NANOAODSIM'))
-    tasks.append(('GJets_DR-0p4_HT-600ToInf','/GJets_DR-0p4_HT-600ToInf_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIFall17NanoAOD-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/NANOAODSIM'))
 	
 	#QCD
 
@@ -130,9 +116,6 @@ if 1 == 1:
     #tasks.append(('QCD_HT500to700-old-pmx','/QCD_HT500to700_TuneCP5_13TeV-madgraph-pythia8/RunIIFall17NanoAOD-PU2017_12Apr2018_old_pmx_94X_mc2017_realistic_v14-v1/NANOAODSIM'))
     tasks.append(('QCD_HT700to1000','/QCD_HT700to1000_TuneCP5_13TeV-madgraph-pythia8/RunIIFall17NanoAOD-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/NANOAODSIM'))	
 	
-	#SingleNeutrino
-
-    tasks.append(('SingleNeutrino','/SingleNeutrino/RunIIFall17NanoAOD-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/NANOAODSIM'))
 
 	#Single Top
 
@@ -149,38 +132,11 @@ if 1 == 1:
 	#TTJets
 
     tasks.append(('TTJets_TuneCP5-new-pmx','/TTJets_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIIFall17NanoAOD-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v1/NANOAODSIM'))
-    #tasks.append(('TTJets_TuneCP5v1','/TTJets_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIIFall17NanoAOD-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/NANOAODSIM'))
+    tasks.append(('TTJets_TuneCP5v1','/TTJets_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIIFall17NanoAOD-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/NANOAODSIM'))
 
-    #TTJetsDiLepton
-    
-    tasks.append(('TTJets_DiLept','/TTJets_DiLept_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/RunIIFall17NanoAOD-PUMoriond17_94X_mcRun2_asymptotic_v2-v1/NANOAODSIM'))
-    tasks.append(('TTJets_DiLept-ext','/TTJets_DiLept_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/RunIIFall17NanoAOD-PUMoriond17_94X_mcRun2_asymptotic_v2_ext1-v1/NANOAODSIM'))
 
-	#TTJetsSingleLepton
 	
-    tasks.append(('TTJets_SingleLeptFromT','/TTJets_SingleLeptFromT_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/RunIIFall17NanoAOD-PUMoriond17_94X_mcRun2_asymptotic_v2-v1/NANOAODSIM'))
-    tasks.append(('TTJets_SingleLeptFromT-ext','/TTJets_SingleLeptFromT_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/RunIIFall17NanoAOD-PUMoriond17_94X_mcRun2_asymptotic_v2_ext1-v1/NANOAODSIM'))
-    tasks.append(('TTJets_SingleLeptFromTbar','/TTJets_SingleLeptFromTbar_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/RunIIFall17NanoAOD-PUMoriond17_94X_mcRun2_asymptotic_v2-v1/NANOAODSIM'))
-    tasks.append(('TTJets_SingleLeptFromTbar-ext','/TTJets_SingleLeptFromTbar_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/RunIIFall17NanoAOD-PUMoriond17_94X_mcRun2_asymptotic_v2_ext1-v1/NANOAODSIM'))
 	
-	#TTX
-	
-    tasks.append(('TTZToLLNuNu_M-10','/TTZToLLNuNu_M-10_TuneCP5_13TeV-amcatnlo-pythia8/RunIIFall17NanoAOD-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/NANOAODSIM'))
-    tasks.append(('TTZToQQ','/TTZToQQ_TuneCP5_13TeV-amcatnlo-pythia8/RunIIFall17NanoAOD-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/NANOAODSIM'))
-    #tasks.append(('TTZToQQv1','/TTZToQQ_TuneCP5_13TeV-amcatnlo-pythia8/RunIIFall17NanoAOD-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/NANOAODSIM'))
-
-    #tasks.append(('TTWJetsToLNu_new_pmx','/TTWJetsToLNu_TuneCP5_PSweights_13TeV-amcatnloFXFX-madspin-pythia8/RunIIFall17NanoAOD-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v1/NANOAODSIM'))
-    #tasks.append(('TTWJetsToLNuv1','/TTWJetsToLNu_TuneCP5_PSweights_13TeV-amcatnloFXFX-madspin-pythia8/RunIIFall17NanoAOD-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/NANOAODSIM'))
-    tasks.append(('TTWJetsToLNu','/TTWJetsToLNu_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/RunIIFall17NanoAOD-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/NANOAODSIM'))
-
-    tasks.append(('TTWJetsToQQ','/TTWJetsToQQ_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/RunIIFall17NanoAOD-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/NANOAODSIM'))
-    #tasks.append(('TTWJetsToQQv1','/TTWJetsToQQ_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/RunIIFall17NanoAOD-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/NANOAODSIM'))
-
-    tasks.append(('TTGJets','/TTGJets_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/RunIIFall17NanoAOD-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/NANOAODSIM'))
-    tasks.append(('TTGJets-ext','/TTGJets_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/RunIIFall17NanoAOD-PU2017_12Apr2018_94X_mc2017_realistic_v14_ext1-v1/NANOAODSIM'))
-
-    #tasks.append(('ttHJetTobb','/ttHJetTobb_M125_TuneCP5_13TeV_amcatnloFXFX_madspin_pythia8/RunIIFall17NanoAOD-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/NANOAODSIM'))
-    tasks.append(('ttHJetTobb','/ttHJetTobb_M125_TuneCP5_13TeV_amcatnloFXFX_madspin_pythia8/RunIIFall17NanoAOD-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v1/NANOAODSIM'))
 
 	#WJetsToLnNu
 			
@@ -213,7 +169,7 @@ if 1 == 1:
 	
     for task in tasks:
         print task[0]
-        config.General.requestName = task[0]
+        config.General.requestName = task[0]+'_281118'
         config.Data.inputDataset = task[1]
-        config.Data.outputDatasetTag = 'Nano_'+task[0]
+        config.Data.outputDatasetTag = 'Nano_281118_'+task[0]
         submit(config)

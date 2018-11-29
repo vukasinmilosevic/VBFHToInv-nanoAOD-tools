@@ -53,41 +53,60 @@ class JetCleaning(Module):
         cleanJets_eta = []
         cleanJets_phi = []
         cleanJets_mass = []
-
+	
+	cleanMuons = []
+        cleanElectrons = []
+	
         for jet in jets:
-  	   test = True
-           for muon in muons:
-              if (deltaR(jet.eta, jet.phi, muon.eta, muon.phi)< self.dR_min):
-                 test =False
-           for electron in electrons:
-              if (deltaR(jet.eta, jet.phi, electron.eta, electron.phi)< self.dR_min):
-                 test =False
+            
+            if not (abs(jet.eta) < 5.0):
+                continue
+ 
+            if not((jet.puId & 0x4) > 0):
+ 	        continue	
+
+            if not((abs(jet.eta)<=2.7 and ((jet.jetId & 0x4) > 0 )) or (abs(jet.eta) > 2.7 and ((jet.jetId & 0x2) > 0 ))):
+	        continue
+	  # for muon in muons:
+          #    if (deltaR(jet.eta, jet.phi, muon.eta, muon.phi)< self.dR_min):
+          #       test =False
+          # for electron in electrons:
+          #    if (deltaR(jet.eta, jet.phi, electron.eta, electron.phi)< self.dR_min):
+          #       test =False
           # for photon in photons:
            #   if (deltaR(jet.eta, jet.phi, photon.eta, photon.phi)< self.dR_min):
             #     test =False
 
-           if test:
-             cleanJets_pt.append(jet.pt)
-             cleanJets_eta.append(jet.eta)
-             cleanJets_phi.append(jet.phi)
-             cleanJets_mass.append(jet.mass) 
+            cleanJets_pt.append(jet.pt)
+            cleanJets_eta.append(jet.eta)
+            cleanJets_phi.append(jet.phi)
+            cleanJets_mass.append(jet.mass) 
         
         Event_ok_cleanJets, leading_Mjj, leading_dPhijj, leading_dEtajj = DiJetVariables(cleanJets_pt, cleanJets_eta, cleanJets_phi, cleanJets_mass)
        
         muons = Collection(event, "Muon")
         electrons = Collection(event, "Electron")
-        met = Object(event, "MET")
+        
+	for muon in muons:
+            if (abs(muon.eta)<2.4 and muon.pt > 10 and muon.pfRelIso04_all < 0.25):
+                cleanMuons.append(muon)
+         
+        for electron in electrons:
+            if (electron.convVeto == True and (electron.cutBased == 1) and electron.pt > 10 and abs(electron.eta) < 2.5):
+                cleanElectrons.append(electron)
+       
+	met = Object(event, "MET")
         met_phi = met.phi
         met_pt = met.pt
                  
-        Event_ok_cleanMet_electrons, CleanMet_electrons_pt, CleanMet_electrons_phi = MetCleaningProcedure(met_pt, met_phi, electrons)
-        Event_ok_cleanMet_muons, CleanMet_muons_pt, CleanMet_muons_phi =  MetCleaningProcedure(met_pt, met_phi, muons) 
-        Event_ok_cleanMet_leptons, CleanMet_leptons_pt, CleanMet_leptons_phi =  MetCleaningProcedure(CleanMet_muons_pt,CleanMet_muons_phi, electrons)
+        Event_ok_cleanMet_electrons, CleanMet_electrons_pt, CleanMet_electrons_phi = MetCleaningProcedure(met_pt, met_phi, cleanElectrons)
+        Event_ok_cleanMet_muons, CleanMet_muons_pt, CleanMet_muons_phi =  MetCleaningProcedure(met_pt, met_phi, cleanMuons) 
+        Event_ok_cleanMet_leptons, CleanMet_leptons_pt, CleanMet_leptons_phi =  MetCleaningProcedure(CleanMet_muons_pt,CleanMet_muons_phi, cleanElectrons)
         Event_ok_jet_met_Nomu, MinDPhiJMet_Nomu = FormJetMetMinDphi(CleanMet_muons_phi, cleanJets_phi, len(cleanJets_phi))
         Event_ok_jet_met_Noel, MinDPhiJMet_Noel = FormJetMetMinDphi(CleanMet_electrons_phi, cleanJets_phi,len(cleanJets_phi))
         Event_ok_jet_met_Nolep, MinDPhiJMet_Nolep = FormJetMetMinDphi(CleanMet_leptons_phi, cleanJets_phi,len(cleanJets_phi)) 
     
-        selection = len(cleanJets_pt)>=2 and leading_Mjj>300 and leading_dEtajj>1 and MinDPhiJMet_Nolep>0.5 and CleanMet_leptons_pt>150
+        selection = len(cleanJets_pt)>=2 and leading_Mjj>500 and leading_dEtajj>2 and MinDPhiJMet_Nolep>0.5 and CleanMet_leptons_pt>150
        # selection = True
 
         if Event_ok_cleanJets and Event_ok_cleanMet_electrons and Event_ok_cleanMet_muons and Event_ok_jet_met_Nomu and Event_ok_jet_met_Noel and Event_ok_cleanMet_leptons and Event_ok_jet_met_Nolep  and selection:
