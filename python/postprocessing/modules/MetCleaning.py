@@ -48,7 +48,15 @@ def MetCleaningProcedure(met_pt, met_phi, leptons):
               met_y+=lep.pt*math.sin(lep.phi)
 
     CleanMet = math.sqrt(met_x**2+met_y**2)
-    return True, CleanMet, math.atan(1.0*met_y/met_x)
+    CleanMetPhi = math.acos(met_x/CleanMet)
+    if met_x < 0:
+        if  met_y < 0 :
+	    CleanMetPhi*=-1.
+    else:
+        if  met_y < 0 :
+            CleanMetPhi*=-1.
+
+    return True, CleanMet, CleanMetPhi
 
 # define modules using the syntax 'name = lambda : constructor' to avoid having them loaded when not needed
 
