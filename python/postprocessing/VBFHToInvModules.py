@@ -10,6 +10,8 @@ from VBFHToInv.NanoAODTools.postprocessing.modules.lepSFProducer import lepSFvet
 from VBFHToInv.NanoAODTools.postprocessing.modules.jetCleaning import JetCleaningConstructor
 from VBFHToInv.NanoAODTools.postprocessing.modules.trigger_selection import TriggerSelectionConstructor
 
+from VBFHToInv.NanoAODTools.postprocessing.modules.objectCleaning import *
+
 #btagging weights - give event weight automatically based on jets discri (so all working points automatically)
 from PhysicsTools.NanoAODTools.postprocessing.modules.btv.btagSFProducer import btagSFProducer 
 btagSF2017deepCSV = lambda : btagSFProducer("2017",'deepcsv')
