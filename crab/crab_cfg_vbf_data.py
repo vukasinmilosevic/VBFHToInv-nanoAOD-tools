@@ -3,8 +3,10 @@ from CRABClient.UserUtilities import config, getUsernameFromSiteDB
 
 config = Configuration()
 
+myDate = '281118'
+
 config.section_("General")
-config.General.requestName = 'Full_MET2017_dataset_281118_filebased'
+config.General.requestName = 'Full_MET2017_dataset_'+myDate+'_filebased'
 config.General.transferLogs=True
 config.section_("JobType")
 config.JobType.pluginName = 'Analysis'

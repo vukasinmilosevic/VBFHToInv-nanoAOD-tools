@@ -11,7 +11,8 @@ from VBFHToInv.NanoAODTools.postprocessing.modules.jetCleaning import JetCleanin
 from VBFHToInv.NanoAODTools.postprocessing.modules.trigger_selection import TriggerSelectionConstructor
 
 #btagging weights - give event weight automatically based on jets discri (so all working points automatically)
-from PhysicsTools.NanoAODTools.postprocessing.modules.btv.btagSFProducer import btagSF2017
+from PhysicsTools.NanoAODTools.postprocessing.modules.btv.btagSFProducer import btagSFProducer 
+btagSF2017deepCSV = lambda : btagSFProducer("2017",'deepcsv')
 
 
 #pu weight - data file is hardcoded !!!

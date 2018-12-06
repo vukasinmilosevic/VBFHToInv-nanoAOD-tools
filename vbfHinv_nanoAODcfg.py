@@ -32,7 +32,7 @@ lepSFveto = lambda : lepSFProducer( "LooseWP_2016", "GPMVA90_2016")
 
 
 dataModules='JetMetMinDPhiConstructor'
-mcModules='JetMetMinDPhiConstructor,puAutoWeight,btagSF2017,lepSFtight,lepSFveto,jetmetUncertainties2017'
+mcModules='JetMetMinDPhiConstructor,puAutoWeight,btagSF2017deepCSV,lepSFtight,lepSFveto,jetmetUncertainties2017'
 
 #cutString=''
 #event.nJet>=2 && event.MET_pt>100'

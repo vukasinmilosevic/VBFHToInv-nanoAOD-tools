@@ -3,8 +3,10 @@ from CRABClient.UserUtilities import config, getUsernameFromSiteDB
 
 config = Configuration()
 
+myDate = '281118'
+
 config.section_("General")
-config.General.requestName = 'Full_MC_correction_281118'
+config.General.requestName = 'Full_MC_correction_'+myDate
 config.General.transferLogs=True
 config.section_("JobType")
 config.JobType.pluginName = 'Analysis'
@@ -169,7 +171,7 @@ if 1 == 1:
 	
     for task in tasks:
         print task[0]
-        config.General.requestName = task[0]+'_281118'
+        config.General.requestName = task[0]+'_'+myDate
         config.Data.inputDataset = task[1]
-        config.Data.outputDatasetTag = 'Nano_281118_'+task[0]
+        config.Data.outputDatasetTag = 'Nano_'+myDate+'_'+task[0]
         submit(config)

@@ -50,5 +50,49 @@ https://cms-service-lumi.web.cern.ch/cms-service-lumi/brilwsdoc.html
 > replace Cert_XX by the output "processedLumis.json" of the data jobs from crab report. 
 
 
+*************************************************
+Basic selection criteria to apply
+*************************************************
+METfilters:
+------------
+Data and MC: 
+Flag_goodVertices>0 && Flag_globalSuperTightHalo2016Filter>0 && Flag_HBHENoiseFilter>0 && Flag_HBHENoiseIsoFilter>0 && Flag_EcalDeadCellTriggerPrimitiveFilter>0 && Flag_BadPFMuonFilter>0 && Flag_BadChargedCandidateFilter>0
 
++ in data only: && Flag_eeBadScFilter>0
 
+#?? To be updated: recipe to rerun on miniAOD.... Flag_ecalBadCalibFilter
+
+Bjets to veto:
+--------------
+https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation94X
+
+Count Jets with : Jet_btagCSVV2 > 0.8838 (medium WP), pT>20 GeV, abseta<2.5.
+[ Next version: use Jet_btagDeepB > 0.4941 (medium WP), rerunning with module btagSF2017deepCSV()]
+
+In data: require nBjets == 0.
+In MC: apply Weight = product{(1-Jet_btagSF[i])} i from 0 to nBjets.
+Syst: Jet_btagSF_up, Jet_btagSF_down.
+
+Taus to veto:
+-------------
+https://twiki.cern.ch/twiki/bin/viewauth/CMS/TauIDRecommendation13TeV
+Using 2017V2 discriminators.
+To do: compare using tauDiscri = Tau_idMVAoldDM2017v2 or tauDiscri = Tau_idMVAoldDMdR032017v2
+
+tauDiscri bitmask 1 = VVLoose, 2 = VLoose, 4 = Loose, 8 = Medium, 16 = Tight, 32 = VTight, 64 = VVTight
+Anti-electron MVA discriminator V6: bitmask 1 = VLoose, 2 = Loose, 4 = Medium, 8 = Tight, 16 = VTight
+AntiMu V3 bitmask 1 = Loose, 2 = Tight
+
+Count taus with : ((tauDiscri & 0x2)>>1)==1, pT > 18 GeV, abseta < 2.3 , Tau_idDecayMode>0.5, ((Tau_idAntiEle & 0x2)>>1)==1 , (Tau_idAntiMu & 0x1) == 1, fabs(Tau_dz)<0.2 
+
+SF = 0.88 ± 0.03.
+Weight = (1-SF)^nTaus.
+
+Apply overlap filter with vetoElectrons and vetoMuons (control regions...)
+
+Photons to veto:
+----------------
+https://twiki.cern.ch/twiki/bin/viewauth/CMS/Egamma2017DataRecommendations
+
+Count photons with pT>15 GeV, abseta<2.5, (Photon_cutBasedBitmap & 0x1)==1, Photon_electronVeto > 0.5
+ 
