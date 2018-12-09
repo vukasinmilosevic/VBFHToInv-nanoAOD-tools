@@ -2,12 +2,13 @@
 import os
 
 #adding specific VBF variables to the trees
-from VBFHToInv.NanoAODTools.postprocessing.modules.dijetVar import DiJetVariableConstructor
+from VBFHToInv.NanoAODTools.postprocessing.modules.dijetVar import *
+#from VBFHToInv.NanoAODTools.postprocessing.modules.diobjVar import *
 from VBFHToInv.NanoAODTools.postprocessing.modules.jetMetmindphi import JetMetMinDPhiConstructor
-from VBFHToInv.NanoAODTools.postprocessing.modules.MetCleaning import MetCleaningConstructor
+from VBFHToInv.NanoAODTools.postprocessing.modules.MetCleaning import *
 from VBFHToInv.NanoAODTools.postprocessing.modules.lepSFProducer import lepSFtight
 from VBFHToInv.NanoAODTools.postprocessing.modules.lepSFProducer import lepSFveto
-from VBFHToInv.NanoAODTools.postprocessing.modules.jetCleaning import JetCleaningConstructor
+#from VBFHToInv.NanoAODTools.postprocessing.modules.jetCleaning import JetCleaningConstructor
 from VBFHToInv.NanoAODTools.postprocessing.modules.trigger_selection import TriggerSelectionConstructor
 
 from VBFHToInv.NanoAODTools.postprocessing.modules.objectCleaning import *

@@ -1,13 +1,15 @@
 import ROOT
+import math
 ROOT.PyConfig.IgnoreCommandLineOptions = True
 
 from PhysicsTools.NanoAODTools.postprocessing.framework.datamodel import Collection 
 from PhysicsTools.NanoAODTools.postprocessing.framework.eventloop import Module
 from PhysicsTools.NanoAODTools.postprocessing.tools import *
 
-class DiJetVar(Module):
-    def __init__(self, jetCollectionName):
-        self.jetCollectionName = jetCollectionName
+class DiObjVar(Module):
+    def __init__(self, objCollectionName, metCollectionName = "MET"):
+        self.objCollectionName = objCollectionName
+        self.metCollectionName = metCollectionName
         pass
     def beginJob(self):
         pass
@@ -15,48 +17,47 @@ class DiJetVar(Module):
         pass
     def beginFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         self.out = wrappedOutputTree
-        self.out.branch("leading_Mjj",  "F");
-	self.out.branch("leading_dEtajj", "F");
-        self.out.branch("leading_dPhijj", "F");
+        self.out.branch(self.metCollectionName+self.objCollectionName+"_MT",  "F");
+        self.out.branch("di"+self.objCollectionName+"_M",  "F");
+        self.out.branch("di"+self.objCollectionName+"_dEta", "F");
+        self.out.branch("di"+self.objCollectionName+"_dPhi", "F");
 
     def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         pass
     def analyze(self, event):
         """process event, return True (go to next module) or False (fail, go to next event)"""
-        jets = Collection(event, self.jetCollectionName)
+        objs = Collection(event, self.objCollectionName)
+        
+        met_phi = getattr(event, self.metCollectionName+"_phi")
+        met_pt = getattr(event, self.metCollectionName+"_pt")
+        
+        if (len(objs)>=1):
+            mt =  2*math.sqrt(met_pt*objs[0].p4().Pt()*(1-math.cos(objs[0].p4().Phi()-met_phi)))
+            self.out.fillBranch(self.metCollectionName+self.objCollectionName+"_MT", mt)
+        else:
+            self.out.fillBranch(self.metCollectionName+self.objCollectionName+"_MT", -1000)
         
         eventSum = ROOT.TLorentzVector()
-        if (len(jets)>=2):
-           eventSum += (jets[0].p4()+jets[1].p4())
-           self.out.fillBranch("leading_Mjj",eventSum.M())
-           self.out.fillBranch("leading_dPhijj", deltaPhi(jets[0].p4().Phi(), jets[1].p4().Phi()))
-           self.out.fillBranch("leading_dEtajj", abs(jets[0].p4().Eta()-jets[1].p4().Eta()))
+        if (len(objs)>=2):
+            eventSum += (objs[0].p4()+objs[1].p4())
+            self.out.fillBranch("di"+self.objCollectionName+"_M", eventSum.M())
+            self.out.fillBranch("di"+self.objCollectionName+"_dEta", abs(objs[0].p4().Eta()-objs[1].p4().Eta()))
+            self.out.fillBranch("di"+self.objCollectionName+"_dPhi", abs(deltaPhi(objs[0].p4().Phi(), objs[1].p4().Phi())))
         else:
-	   self.out.fillBranch("leading_Mjj",-1000)
-           self.out.fillBranch("leading_dPhijj", -1000)
-           self.out.fillBranch("leading_dEtajj", -1000)
+            self.out.fillBranch("di"+self.objCollectionName+"_M", -1000)
+            self.out.fillBranch("di"+self.objCollectionName+"_dEta", -1000)
+            self.out.fillBranch("di"+self.objCollectionName+"_dPhi", -1000)
+        
+        
+        
         return True
-
-def DiJetVariables(jets_pt, jets_eta, jets_phi, jets_m):
-    eventSum = ROOT.TLorentzVector()
-    jet1 = ROOT.TLorentzVector()
-    jet2 = ROOT.TLorentzVector()
-    if (len(jets_pt)>=2):
-        jet1.SetPtEtaPhiM(jets_pt[0],jets_eta[0],jets_phi[0],jets_m[0])
-        jet2.SetPtEtaPhiM(jets_pt[1],jets_eta[1],jets_phi[1],jets_m[1])
-        eventSum += (jet1+jet2)
-        leading_Mjj = eventSum.M()
-        leading_dPhijj = deltaPhi(jets_phi[0], jets_phi[1])
-        leading_dEtajj =  abs(jets_eta[0]-jets_eta[1])
-        return True, leading_Mjj, leading_dPhijj, leading_dEtajj
-    else:
-        return False, 0.0, 0.0, 0.0
-	
 
 # define modules using the syntax 'name = lambda : constructor' to avoid having them loaded when not needed
 
 
 
 
-DiJetVariableConstructor = lambda : DiJetVar(jetCollectionName= "Jet") 
+DiCleanJetVariableConstructor = lambda : DiObjVar(objCollectionName= "CleanJet")
+DiLooseMuonVariableConstructor = lambda : DiObjVar(objCollectionName= "LooseMuon", metCollectionName= "MetNoLooseMuon")
+DiElectronVariableConstructor = lambda : DiObjVar(objCollectionName= "Electron", metCollectionName= "MetNoElectron")
  
