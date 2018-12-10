@@ -52,8 +52,9 @@ class CRCreator(Module):
             mt =  2*math.sqrt(met_pt*TightLeptons1[0].p4().Pt()*(1-math.cos(TightLeptons1[0].p4().Phi()-met_phi)))
             self.out.fillBranch("CR_Flag", 1)
             self.out.fillBranch("CR_Muon_MT", mt)
+            self.out.fillBranch("CR_DiMuon_mass", -1000)
         
-        # Double Muon CR check
+        #Double Muon CR check
         elif nTightLeptons1>0 and nLooseLeptons1>=0 and (nLooseLeptons1+nTightLeptons1)==2:
             if nTightLeptons1 == 1:
                 pt1 = TightLeptons1[0].p4().Pt()
@@ -65,16 +66,25 @@ class CRCreator(Module):
                 pt2 = TightLeptons1[1].p4().Pt()
             else:
                 print "This should not be happening: NLoose = ", nLooseLeptons1, "NTight = ", nTightLeptons1
-            
+        
             if DiMuon_mass>60 and DiMuon_mass<120 and pt1>20 and pt2>10:
                 self.out.fillBranch("CR_Flag", 2)
                 self.out.fillBranch("CR_DiMuon_mass", DiMuon_mass)
+                self.out.fillBranch("CR_Muon_MT", -1000)
+            else:
+                #self.out.fillBranch("CR_Flag", -2)
+                #self.out.fillBranch("CR_DiMuon_mass", -1000)
+                #self.out.fillBranch("CR_Muon_MT", -1000)
+                 return False
+                        
         #If None of the above CR_Flag == 0
         else:
-            self.out.fillBranch("CR_Flag", 0)
-            self.out.fillBranch("CR_Muon_MT", -1000)
-            self.out.fillBranch("CR_DiMuon_mass", -1000)
-     
+            #self.out.fillBranch("CR_Flag", 0)
+            #self.out.fillBranch("CR_Muon_MT", -1000)
+            #self.out.fillBranch("CR_DiMuon_mass", -1000)
+        #If only looking in the CRs
+            return False
+        
         return True
 
 

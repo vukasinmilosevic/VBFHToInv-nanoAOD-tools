@@ -5,6 +5,7 @@ import os
 from VBFHToInv.NanoAODTools.postprocessing.modules.diobjVar import *
 from VBFHToInv.NanoAODTools.postprocessing.modules.metCleaning import *
 from VBFHToInv.NanoAODTools.postprocessing.modules.crCreator import *
+from VBFHToInv.NanoAODTools.postprocessing.modules.selectionCreator import *
 from VBFHToInv.NanoAODTools.postprocessing.modules.lepSFProducer import lepSFtight
 from VBFHToInv.NanoAODTools.postprocessing.modules.lepSFProducer import lepSFveto
 from VBFHToInv.NanoAODTools.postprocessing.modules.trigger_selection import TriggerSelectionConstructor
