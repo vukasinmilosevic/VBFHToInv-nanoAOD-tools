@@ -43,8 +43,7 @@ class SelectionCreator(Module):
 # define modules using the syntax 'name = lambda : constructor' to avoid having them loaded when not needed
 SelectionCreatorConstructorTest = lambda : SelectionCreator( VariableNames = ["MetNoLooseMuon_pt","MetNoLooseMuon_CleanJet_mindPhi"],
                                                         VariableSelections = ["obj>250", "obj>0.5"])
-
-SelectionCreatorConstructor = lambda : SelectionCreator( VariableNames = ["MetNoLooseMuon_pt","MetNoLooseMuon_CleanJet_mindPhi", "diCleanJet_M","diCleanJet_dPhi","diCleanJet_dEta"],
-                                                            VariableSelections = ["obj>250", "obj>0.5" , "obj>500", "obj<1.5", "obj>2" ])
+SelectionCreatorConstructor = lambda : SelectionCreator( VariableNames = ["nCleanJet", "MetNoLooseMuon_pt", "MetNoLooseMuon_CleanJet_mindPhi", "diCleanJet_M", "diCleanJet_dEta"],
+                                                            VariableSelections = ["obj>=2", "obj>150", "obj>0.5" , "obj>500", "obj>2" ])
 
 
