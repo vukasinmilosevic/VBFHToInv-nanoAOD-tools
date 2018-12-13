@@ -45,5 +45,7 @@ SelectionCreatorConstructorTest = lambda : SelectionCreator( VariableNames = ["M
                                                         VariableSelections = ["obj>250", "obj>0.5"])
 SelectionCreatorConstructor = lambda : SelectionCreator( VariableNames = ["nCleanJet", "MetNoLooseMuon_pt", "MetNoLooseMuon_CleanJet_mindPhi", "diCleanJet_M", "diCleanJet_dEta"],
                                                             VariableSelections = ["obj>=2", "obj>150", "obj>0.5" , "obj>500", "obj>2" ])
+SelectionCreatorConstructorLoose = lambda : SelectionCreator( VariableNames = ["nCleanJet", "MetNoLooseMuon_pt", "MetNoLooseMuon_CleanJet_mindPhi", "diCleanJet_M", "diCleanJet_dEta"],
+                                                            VariableSelections = ["obj>=2", "obj>0", "obj>0." , "obj>0", "obj>0" ])
 
 
