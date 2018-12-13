@@ -38,7 +38,7 @@ class ObjectCleaning(Module):
         """process event, return True (go to next module) or False (fail, go to next event)"""
         objs = Collection(event, self.collectionName)
 
-        print 'Length of objs %s: %s'%(self.collectionName,len(objs))
+        #print 'Length of objs %s: %s'%(self.collectionName,len(objs))
 
         eventSelW = 1.0
         eventVetoW = 1.0
@@ -70,11 +70,11 @@ class ObjectCleaning(Module):
                 if (self.SFnamePrefix is not None):
                     ret = Object(event,self.collectionName,index=objIdx)
                     #wobj = obj[objIdx].effSF_Loose
-                    print ret.__dict__
-                    wobj = ret.__dict__[self.SFname]
+                    wobj = ret.__getattr__(self.SFname)
                 else:
                     wobj = SFval
 
+                #print ' ------ loop weight value: %3.3f'%wobj
                 eventSelW *= wobj
                 eventVetoW *= (1-wobj)
 
