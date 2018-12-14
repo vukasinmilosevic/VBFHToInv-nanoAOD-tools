@@ -126,5 +126,5 @@ def FormJetMetMinDphi(met_phi, jet_phi, n_jets):
 # define modules using the syntax 'name = lambda : constructor' to avoid having them loaded when not needed
 
 MetCleaningConstructor_baseLeptons = lambda : MetCleaning(metCollectionName = "MET", lep1CollectionName= "Muon", lep2CollectionName= "Electron")
-MetCleaningConstructor_baseLooseLeptons = lambda : MetCleaning(metCollectionName = "MET", lep1CollectionName= "LooseMuon", lep2CollectionName= "Electron", jetCollectionName = "CleanJet")
+MetCleaningConstructor_baseLooseLeptons = lambda : MetCleaning(metCollectionName = "MET", lep1CollectionName= "LooseMuon", lep2CollectionName= "VetoElectron", jetCollectionName = "CleanJet")
 

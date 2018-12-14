@@ -92,8 +92,8 @@ class CRCreator(Module):
         #If only looking in the CRs
                 return False
         else:
-		return False 
-
+		#return False 
+                return True
 
 
 # define modules using the syntax 'name = lambda : constructor' to avoid having them loaded when not needed
