@@ -3,14 +3,16 @@ from CRABClient.UserUtilities import config, getUsernameFromSiteDB
 
 config = Configuration()
 
+myDate = '281118'
+
 config.section_("General")
-config.General.requestName = 'MET_dataset'
+config.General.requestName = 'Full_MET2017_dataset_'+myDate+'_filebased'
 config.General.transferLogs=True
 config.section_("JobType")
 config.JobType.pluginName = 'Analysis'
 config.JobType.psetName = 'PSet.py'
 config.JobType.scriptExe = 'crab_script_vbf_data.sh'
-config.JobType.inputFiles = ['crab_script_vbf_data.py','../scripts/haddnano.py','../data/pileup/Cert_294927-306462_13TeV_EOY2017ReReco_Collisions17_JSON_v1.txt'] #hadd nano will not be needed once nano tools are in cmssw
+config.JobType.inputFiles = ['crab_script_vbf_data.py','../../../PhysicsTools/NanoAODTools/scripts/haddnano.py','../data/pileup/Cert_294927-306462_13TeV_EOY2017ReReco_Collisions17_JSON_v1.txt'] #hadd nano will not be needed once nano tools are in cmssw
 config.JobType.sendPythonFolder	 = True
 config.section_("Data")
 #config.Data.inputDataset = '/DYJetsToLL_1J_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIIFall17NanoAOD-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/NANOAODSIM'
@@ -18,11 +20,11 @@ config.section_("Data")
 config.Data.inputDBS = 'global'
 config.Data.splitting = 'FileBased'
 #config.Data.splitting = 'EventAwareLumiBased'
-#config.Data.unitsPerJob = 100000
-config.Data.unitsPerJob = 2
-#config.Data.totalUnits = 10
+config.Data.unitsPerJob = 1 
+#config.Data.unitsPerJob = 2
+#config.Data.totalUnits = 1
 
-config.Data.outLFNDirBase = '/store/user/amagnan/VBF2017/Data/181025'
+config.Data.outLFNDirBase = '/store/user/vmilosev/HIG_EXOv2_28112018'
 config.Data.publication = False
 #config.Data.outputDatasetTag = 'NanoTestPost'
 config.section_("Site")
@@ -57,14 +59,24 @@ if 1 == 1:
     #############################################################################################
 
     tasks=list()
-    #json= '/afs/cern.ch/work/v/vmilosev/VBFHToInv-nanoAOD-tools/181020/CMSSW_10_2_5/src/PhysicsTools/NanoAODTools/crab/Cert_294927-306462_13TeV_EOY2017ReReco_Collisions17_JSON_v1.txt'
     #Runs
-    tasks.append(('MET-2017B-24Oct18-v3','/MET/Run2017B-31Mar2018-v1/NANOAOD'))
-    #tasks.append(('MET-2017C-24Oct18-v3','/MET/Run2017C-31Mar2018-v1/NANOAOD'))
-    #tasks.append(('MET-2017D-24Oct18-v3','/MET/Run2017D-31Mar2018-v1/NANOAOD'))
-    #tasks.append(('MET-2017E-24Oct18-v3','/MET/Run2017E-31Mar2018-v1/NANOAOD'))
-    #tasks.append(('MET-2017F-24Oct18-v3','/MET/Run2017F-31Mar2018-v1/NANOAOD'))
+    tasks.append(('MET-2017B-28Nov18-filebased','/MET/Run2017B-31Mar2018-v1/NANOAOD'))
+    tasks.append(('MET-2017C-28Nov18-filebased','/MET/Run2017C-31Mar2018-v1/NANOAOD'))
+    tasks.append(('MET-2017D-28Nov18-filebased','/MET/Run2017D-31Mar2018-v1/NANOAOD'))
+    tasks.append(('MET-2017E-28Nov18-filebased','/MET/Run2017E-31Mar2018-v1/NANOAOD'))
+    tasks.append(('MET-2017F-28Nov18-filebased','/MET/Run2017F-31Mar2018-v1/NANOAOD'))
     
+    tasks.append(('SingleMuon-2017B-28Nov18-filebased','/SingleMuon/Run2017B-31Mar2018-v1/NANOAOD'))
+    tasks.append(('SingleMuon-2017C-28Nov18-filebased','/SingleMuon/Run2017C-31Mar2018-v1/NANOAOD'))
+    tasks.append(('SingleMuon-2017D-28Nov18-filebased','/SingleMuon/Run2017D-31Mar2018-v1/NANOAOD'))
+    tasks.append(('SingleMuon-2017E-28Nov18-filebased','/SingleMuon/Run2017E-31Mar2018-v1/NANOAOD'))
+    tasks.append(('SingleMuon-2017F-28Nov18-filebased','/SingleMuon/Run2017F-31Mar2018-v1/NANOAOD'))
+    
+    tasks.append(('SingleElectron-2017B-28Nov18-filebased','/SingleElectron/Run2017B-31Mar2018-v1/NANOAOD'))
+    tasks.append(('SingleElectron-2017C-28Nov18-filebased','/SingleElectron/Run2017C-31Mar2018-v1/NANOAOD'))
+    tasks.append(('SingleElectron-2017D-28Nov18-filebased','/SingleElectron/Run2017D-31Mar2018-v1/NANOAOD'))
+    tasks.append(('SingleElectron-2017E-28Nov18-filebased','/SingleElectron/Run2017E-31Mar2018-v1/NANOAOD'))
+    tasks.append(('SingleElectron-2017F-28Nov18-filebased','/SingleElectron/Run2017F-31Mar2018-v1/NANOAOD'))
  
     for task in tasks:
         print task[0]
@@ -72,5 +84,3 @@ if 1 == 1:
         config.Data.inputDataset = task[1]
         config.Data.outputDatasetTag = 'NanoTest'+task[0]
         submit(config)
-        config.Data.lumiMask = 'https://cms-service-dqm.web.cern.ch/cms-service-dqm/CAF/certification/Collisions17/13TeV/ReReco/Cert_294927-306462_13TeV_EOY2017ReReco_Collisions17_JSON_v1.txt'
-        config.Data.runRange = '299327-299329'

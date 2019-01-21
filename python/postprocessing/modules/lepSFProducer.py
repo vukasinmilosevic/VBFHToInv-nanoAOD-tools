@@ -103,4 +103,3 @@ class lepSFProducer(Module):
 lepSFveto = lambda : lepSFProducer( '2017', 'Loose', 'Veto')
 #lepSFvetotrig = lambda : lepSFProducer( '2017', 'Loose_withTrg', 'Veto')
 lepSFtight = lambda : lepSFProducer( '2017', 'Tight', 'Tight')
-
