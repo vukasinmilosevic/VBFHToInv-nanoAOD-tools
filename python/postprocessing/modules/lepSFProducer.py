@@ -75,9 +75,9 @@ class lepSFProducer(Module):
         self.out.branch("Muon_effSF_%s"%(self.muonSelectionTag), "F", lenVar="nMuon")
         self.out.branch("Electron_effSF_%s"%(self.electronSelectionTag), "F", lenVar="nElectron")
         for i in range(len(self.mu_type)): 
-            self.out.branch("Muon_errSF_%s_%s"%(self.mu_type[i],self.muonSelectionTag), "F", lenVar="nMuon")
+            self.out.branch("Muon_effSF_%s_syst%s"%(self.muonSelectionTag,self.mu_type[i]), "F", lenVar="nMuon")
         for i in range(len(self.el_type)): 
-            self.out.branch("Electron_errSF_%s_%s"%(self.el_type[i],self.electronSelectionTag), "F", lenVar="nElectron")
+            self.out.branch("Electron_effSF_%s_syst%s"%(self.electronSelectionTag,self.el_type[i]), "F", lenVar="nElectron")
 
     def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         pass
@@ -91,10 +91,10 @@ class lepSFProducer(Module):
         self.out.fillBranch("Electron_effSF_%s"%(self.electronSelectionTag), sf_el)
         for i in range(len(self.mu_type)): 
             sf_mu_err = [ self._worker_mu.getSFErr(i,mu.pdgId,mu.pt,mu.eta) for mu in muons ]
-            self.out.fillBranch("Muon_errSF_%s_%s"%(self.mu_type[i],self.muonSelectionTag), sf_mu_err)
+            self.out.fillBranch("Muon_effSF_%s_syst%s"%(self.muonSelectionTag,self.mu_type[i]), sf_mu_err)
         for i in range(len(self.el_type)): 
             sf_el_err = [ self._worker_el.getSFErr(i,el.pdgId,el.pt,el.eta) for el in electrons ]
-            self.out.fillBranch("Electron_errSF_%s_%s"%(self.el_type[i],self.electronSelectionTag), sf_el_err)
+            self.out.fillBranch("Electron_effSF_%s_syst%s"%(self.electronSelectionTag,self.el_type[i]), sf_el_err)
 
         return True
 
