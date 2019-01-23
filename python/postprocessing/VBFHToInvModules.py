@@ -4,7 +4,8 @@ import os
 #adding specific VBF variables to the trees
 from VBFHToInv.NanoAODTools.postprocessing.modules.diobjVar import *
 from VBFHToInv.NanoAODTools.postprocessing.modules.metCleaning import *
-from VBFHToInv.NanoAODTools.postprocessing.modules.crCreator import *
+from VBFHToInv.NanoAODTools.postprocessing.modules.crDiLepCreator import *
+from VBFHToInv.NanoAODTools.postprocessing.modules.crSingleLepCreator import *
 from VBFHToInv.NanoAODTools.postprocessing.modules.selectionCreator import *
 from VBFHToInv.NanoAODTools.postprocessing.modules.lepSFProducer import lepSFtight
 from VBFHToInv.NanoAODTools.postprocessing.modules.lepSFProducer import lepSFveto
