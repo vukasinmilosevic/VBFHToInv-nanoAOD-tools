@@ -1,5 +1,6 @@
 <lcgdict>
 <selection>
   <class name="LeptonEfficiencyCorrectorCppWorker"/>
+  <class name="NLOCorrectorCppWorker"/>
 </selection>
 </lcgdict>
