@@ -115,7 +115,7 @@ class nloSFProducer(Module):
                                 lep2 = part
 
                     else:
-                        print ' --- event %d pdgid %d --- no mother'%(event._entry,part.pdgId)
+                        #print ' --- event %d pdgid %d --- no mother'%(event._entry,part.pdgId)
                         if (part.pdgId>0):
                             lep1 = part
                         else:
