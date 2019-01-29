@@ -20,11 +20,13 @@ class CRDiLepCreator(Module):
         pass
     def beginFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         self.out = wrappedOutputTree
-        self.out.branch("CR_Flag", "F");
+        
         if "muon" in self.LooseLepCollectionName.lower():
             self.out.branch("CR_DiMuon_mass", "F")
+            self.out.branch("CR_Zmumu", "F");
         else:
             self.out.branch("CR_DiElectron_mass", "F")
+            self.out.branch("CR_Zee", "F");
 
 
     def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
@@ -40,35 +42,46 @@ class CRDiLepCreator(Module):
         nLooseVetoLeptons = getattr(event, "n"+self.LooseLepVetoCollectionName)
         nTightVetoLeptons = getattr(event, "n"+self.TightLepVetoCollectionName)
         
-        if (nLooseVetoLeptons == 0) and (nTightVetoLeptons == 0):
+        DiObjMass = -1000
+        CR_Zee = 0
+        CR_Zmumu = 0
         
-        #Double Lep CR check
-            if nTightLeptons>0 and nLooseLeptons>=0 and (nLooseLeptons+nTightLeptons)==2:
-                if nTightLeptons == 1:
-                    pt1 = TightLeptons[0].p4().Pt()
-                    pt2 = LooseLeptons[0].p4().Pt()
-                    if pt2>pt1:
-                        temp = pt1
-                        pt1 = pt2
-                        pt2 = temp
-                    
-                    DiLep_mass = (TightLeptons[0].p4()+LooseLeptons[0].p4()).M()
-                    
-                elif nTightLeptons == 2:
-                    DiLep_mass = (TightLeptons[0].p4()+TightLeptons[1].p4()).M()
-                    pt1 = TightLeptons[0].p4().Pt()
-                    pt2 = TightLeptons[1].p4().Pt()
-                else:
-                    print "This should not be happening: NLoose = ", nLooseLeptons, "NTight = ", nTightLeptons
+        if (nLooseVetoLeptons == 0) and (nTightVetoLeptons == 0) and nTightLeptons>0 and nLooseLeptons>=0 and (nLooseLeptons+nTightLeptons)==2:
+            DiLep_mass = -1000
+            if nTightLeptons == 1:
+                pt1 = TightLeptons[0].p4().Pt()
+                pt2 = LooseLeptons[0].p4().Pt()
+                if pt2>pt1:
+                    temp = pt1
+                    pt1 = pt2
+                    pt2 = temp
                 
-                if eval(self.Selection):
-                    
-                    if "muon" in self.LooseLepCollectionName.lower():
-                        self.out.fillBranch("CR_Flag", 2)
-                        self.out.fillBranch("CR_DiMuon_mass", DiLep_mass)
-                    else:
-                        self.out.fillBranch("CR_Flag", 4)
-                        self.out.fillBranch("CR_DiElectron_mass", DiLep_mass)
+                DiLep_mass = (TightLeptons[0].p4()+LooseLeptons[0].p4()).M()
+                
+            elif nTightLeptons == 2:
+                DiLep_mass = (TightLeptons[0].p4()+TightLeptons[1].p4()).M()
+                pt1 = TightLeptons[0].p4().Pt()
+                pt2 = TightLeptons[1].p4().Pt()
+            else:
+                print "This should not be happening: NLoose = ", nLooseLeptons, "NTight = ", nTightLeptons
+            
+            if eval(self.Selection):
+                DiObjMass = DiLep_mass
+                if "muon" in self.LooseLepCollectionName.lower():
+                    CR_Zmumu = 1
+                else:
+                    CR_Zee = 1
+        
+        if "muon" in self.LooseLepCollectionName.lower():
+            self.out.fillBranch("CR_Zmumu", CR_Zmumu)
+            self.out.fillBranch("CR_DiMuon_mass", DiObjMass)
+        else:
+            self.out.fillBranch("CR_Zee", CR_Zee)
+            self.out.fillBranch("CR_DiElectron_mass", DiObjMass)
+        
+            
+
+
 
         return True
            

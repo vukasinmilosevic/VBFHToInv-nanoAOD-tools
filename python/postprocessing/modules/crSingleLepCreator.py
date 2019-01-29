@@ -20,11 +20,13 @@ class CRSingleLepCreator(Module):
         pass
     def beginFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         self.out = wrappedOutputTree
-        self.out.branch("CR_Flag", "F");
         if "muon" in self.LooseLepCollectionName.lower():
+            self.out.branch("CR_Wmunu", "F");
             self.out.branch("CR_Muon_MT", "F")
         else:
             self.out.branch("CR_Electron_MT", "F")
+            self.out.branch("CR_Wenu", "F");
+
 
     def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         pass
@@ -42,16 +44,28 @@ class CRSingleLepCreator(Module):
         met_phi = getattr(event, self.metCollectionName+"_phi")
         met_pt = getattr(event, self.metCollectionName+"_pt")
         
+        
+        mt = -1000
+        CR_Wenu = 0
+        CR_Wmunu = 0
+        
         # Single Muon CR check
-        if (nLooseVetoLeptons == 0) and (nTightVetoLeptons == 0):
-            if nTightLeptons == 1 and nLooseLeptons ==0:
-                mt =  2*math.sqrt(met_pt*TightLeptons[0].p4().Pt()*(1-math.cos(TightLeptons[0].p4().Phi()-met_phi)))
-                if "muon" in self.LooseLepCollectionName.lower():
-                    self.out.fillBranch("CR_Flag", 1)
-                    self.out.fillBranch("CR_Muon_MT", mt)
-                else:
-                    self.out.fillBranch("CR_Flag", 3)
-                    self.out.fillBranch("CR_Electron_MT", mt)
+        if (nLooseVetoLeptons == 0) and (nTightVetoLeptons == 0) and nTightLeptons == 1 and nLooseLeptons ==0:
+            
+            mt =  2*math.sqrt(met_pt*TightLeptons[0].p4().Pt()*(1-math.cos(TightLeptons[0].p4().Phi()-met_phi)))
+            
+            if "muon" in self.LooseLepCollectionName.lower():
+                CR_Wmunu = 1
+            else:
+                CR_Wenu = 1
+    
+        if "muon" in self.LooseLepCollectionName.lower():
+            self.out.fillBranch("CR_Wmunu", CR_Wmunu)
+            self.out.fillBranch("CR_Muon_MT", mt)
+        else:
+            self.out.fillBranch("CR_Wenu", CR_Wenu)
+            self.out.fillBranch("CR_Electron_MT", mt)
+        
         return True
 
 
