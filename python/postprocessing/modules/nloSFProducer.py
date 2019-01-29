@@ -61,14 +61,17 @@ class nloSFProducer(Module):
 
         print 'Inputfile: %s, process %s'%(inputFileName,self.process)
 
-
         if ('QCD' in self.process or 'EWK' in self.process):
             if 'QCD' in self.process: 
                 self.nlo_f = ROOT.std.vector(str)(len(qcd_nlo_f))
-                for i in range(len(qcd_nlo_f)): self.nlo_f[i] = self.inputFilePath + qcd_nlo_f[i]
+                for i in range(len(qcd_nlo_f)): 
+                    self.nlo_f[i] = self.inputFilePath + qcd_nlo_f[i]
+                    print ' --- Adding file %s'%self.nlo_f[i]
             else: 
                 self.nlo_f = ROOT.std.vector(str)(len(ewk_nlo_f))
-                for i in range(len(ewk_nlo_f)): self.nlo_f[i] = self.inputFilePath + ewk_nlo_f[i]
+                for i in range(len(ewk_nlo_f)): 
+                    self.nlo_f[i] = self.inputFilePath + ewk_nlo_f[i]
+                    print ' --- Adding file %s'%self.nlo_f[i]
 
             self._worker = ROOT.NLOCorrectorCppWorker(self.process,self.nlo_f)
 
@@ -87,36 +90,63 @@ class nloSFProducer(Module):
         nloSF = 1.0
         boson_pt=0
         mjj=0
+        #print ' - event %d:'%(event._entry)
 
         if self._worker: 
 
             genParticles =  Collection(event, "GenPart")
             boson_found = False
+            lep1 = None
+            lep2 = None
             for part in genParticles:
-                if ( (part.pdgId == 23 or abs(part.pdgId) == 24) and (part.statusFlags & 0x2000)>0 and (part.statusFlags & 0x100)>0 ): 
-                    boson_pt = part.pt 
-                    #if (not boson_found):
-                        #print ' --- event %d 1st boson found: pdgid %d pT %3.3f status %d flags %d'%(event._entry,part.pdgId,part.pt,part.status,part.statusFlags)
+                #if ( (part.pdgId == 23 or abs(part.pdgId) == 24) and (part.statusFlags & 0x2000)>0 and (part.statusFlags & 0x100)>0 ):
+                if ( (abs(part.pdgId)>10 and abs(part.pdgId) < 17) and ( (part.status == 1 and (part.statusFlags & 0x1)>0) or ((part.statusFlags & 0x1)>0 and (part.statusFlags & 0x2)>0) ) ):
+                    if (part.genPartIdxMother>=0):
+                        mother = genParticles[part.genPartIdxMother]
+                        #print ' --- event %d pdgid %d --- pdg mother %d: %d '%(event._entry,part.pdgId,part.genPartIdxMother,mother.pdgId)
+ 
+                        if (mother.pdgId == 23 or abs(mother.pdgId) == 24):
+                            boson_pt = mother.pt
+                            boson_found = True
+                        else:
+                            if (part.pdgId>0):
+                                lep1 = part
+                            else:
+                                lep2 = part
+
+                    else:
+                        print ' --- event %d pdgid %d --- no mother'%(event._entry,part.pdgId)
+                        if (part.pdgId>0):
+                            lep1 = part
+                        else:
+                            lep2 = part
+
+            if (not boson_found and lep1 is not None and lep2 is not None):
+                boson_pt = (lep1.p4()+lep2.p4()).Pt()
+                boson_found = True
+
+            if (not boson_found):
+                idx=0
+                print ' --- event %d boson not found:'%(event._entry)
+                for part in genParticles:
+                    print ' ------ part %d: pdgid %d pT %3.3f status %d flags %d mother %d'%(idx,part.pdgId,part.pt,part.status,part.statusFlags,part.genPartIdxMother)
+                    idx += 1
+
                         #if (part.genPartIdxMother>=0):
                             #print ' ------ pdg mother %d: %d '%(part.genPartIdxMother,genParticles[part.genPartIdxMother].pdgId)
-                    boson_found = True
-
-            #if (not boson_found):
-            #    for part in genParticles:
 
 
 
-            if 'EWK' in self.process:
-                genJets = Collection(event, "GenJet")
+            genJets = Collection(event, "GenJet")
                 #idx = 0
                 #for genjet in genJets:
                 #    print 'Jet %d: pT=%3.3f GeV'%(idx,genjet.pt)
                 #    idx += 1
-                if (len(genJets)>1):
-                    mjj = (genJets[0].p4()+genJets[1].p4()).M()
+            if (len(genJets)>1):
+                mjj = (genJets[0].p4()+genJets[1].p4()).M()
                 
             nloSF = self._worker.getSF(boson_pt,mjj)
-            if boson_pt>0: self.counter += 1
+            if boson_found: self.counter += 1
 
         self.out.fillBranch("nloSF_%s"%(self.process),nloSF)
         self.out.fillBranch("gen_boson_pt",boson_pt)

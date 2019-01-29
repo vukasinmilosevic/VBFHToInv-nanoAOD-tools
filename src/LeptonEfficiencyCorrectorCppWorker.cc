@@ -1,6 +1,6 @@
 #include "VBFHToInv/NanoAODTools/interface/LeptonEfficiencyCorrectorCppWorker.h"
 
-LeptonEfficiencyCorrectorCppWorker::LeptonEfficiencyCorrectorCppWorker(const std::vector<std::string> & files, const std::vector<std::string> & histos) {
+LeptonEfficiencyCorrectorCppWorker::LeptonEfficiencyCorrectorCppWorker(std::vector<std::string> files, std::vector<std::string> histos) {
   effmaps_.clear();
   if(files.size()!=histos.size()) {
     std::cout << "ERROR! There should be one histogram per input file! Returning 0 as SF." << std::endl;

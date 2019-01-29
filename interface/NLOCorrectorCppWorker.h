@@ -13,19 +13,21 @@ class NLOCorrectorCppWorker {
  public:
 
   NLOCorrectorCppWorker() {}
-  NLOCorrectorCppWorker(const std::string & process, const std::vector<std::string> & files);
+  NLOCorrectorCppWorker(std::string process, std::vector<std::string> files);
   ~NLOCorrectorCppWorker() {}
 
   double getSF(const double & pT, const double & mjj);
 
 private:
   bool isQCD_;
+  unsigned nMjjBins_;
+  unsigned binMjj_[5];
+ 
+  TH1F* hEWKcorr_;
+  TH1F* hQCDcorr_;
+  std::vector<TH1F*> hVBFcorr_;
 
-  TH1F *hEWKcorr_;
-  TH1F *hQCDcorr_;
-  TH1F *hVBFcorr_;
-
-  TH2F *hcorr_;
+  TH2F* hcorr_;
 };
 
 #endif

@@ -11,6 +11,7 @@ from VBFHToInv.NanoAODTools.postprocessing.modules.selectionCreator import *
 from VBFHToInv.NanoAODTools.postprocessing.modules.lepSFProducer import lepSFtight
 from VBFHToInv.NanoAODTools.postprocessing.modules.lepSFProducer import lepSFveto
 from VBFHToInv.NanoAODTools.postprocessing.modules.nloSFProducer import nloSF
+from VBFHToInv.NanoAODTools.postprocessing.modules.bosonDecayFinder import bosonDecay
 from VBFHToInv.NanoAODTools.postprocessing.modules.trigger_selection import TriggerSelectionConstructor
 
 from VBFHToInv.NanoAODTools.postprocessing.modules.objectCleaning import *

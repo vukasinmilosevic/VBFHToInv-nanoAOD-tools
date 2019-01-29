@@ -13,7 +13,7 @@ class LeptonEfficiencyCorrectorCppWorker {
  public:
 
   LeptonEfficiencyCorrectorCppWorker() {effmaps_.clear();}
-  LeptonEfficiencyCorrectorCppWorker(const std::vector<std::string> & files, const std::vector<std::string> & histos);
+  LeptonEfficiencyCorrectorCppWorker(std::vector<std::string> files, std::vector<std::string> histos);
   ~LeptonEfficiencyCorrectorCppWorker() {}
 
   void setLeptons(int nLep, int *lepPdgId, float *lepPt, float *lepEta);
