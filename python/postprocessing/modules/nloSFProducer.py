@@ -36,6 +36,7 @@ class nloSFProducer(Module):
     def beginFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         self.out = wrappedOutputTree
         self.process = 'OTHER'
+        self.counter = 0
 
         qcd_nlo_f=["kfactor_24bins.root"]
         inputFileName = inputFile.GetName()
@@ -74,24 +75,37 @@ class nloSFProducer(Module):
         else: self._worker = None
 
         self.out.branch("nloSF_%s"%(self.process), "F")
+        self.out.branch("gen_boson_pt", "F")
+        self.out.branch("gen_mjj", "F")
 
 
     def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
+        print 'Found %d events with boson'%(self.counter)
         pass
     def analyze(self, event):
         """process event, return True (go to next module) or False (fail, go to next event)"""
         nloSF = 1.0
+        boson_pt=0
+        mjj=0
 
         if self._worker: 
 
             genParticles =  Collection(event, "GenPart")
-            boson_pt=0
+            boson_found = False
             for part in genParticles:
-                if ( (part.pdgId == 23 or abs(part.pdgId) == 24) and (part.statusFlags & 0x2100)>0 ): 
+                if ( (part.pdgId == 23 or abs(part.pdgId) == 24) and (part.statusFlags & 0x2000)>0 and (part.statusFlags & 0x100)>0 ): 
                     boson_pt = part.pt 
-                    #print ' --- event %d boson found: pdgid %d pT %3.3f status %d flags %d'%(event._entry,part.pdgId,part.pt,part.status,part.statusFlags)
+                    #if (not boson_found):
+                        #print ' --- event %d 1st boson found: pdgid %d pT %3.3f status %d flags %d'%(event._entry,part.pdgId,part.pt,part.status,part.statusFlags)
+                        #if (part.genPartIdxMother>=0):
+                            #print ' ------ pdg mother %d: %d '%(part.genPartIdxMother,genParticles[part.genPartIdxMother].pdgId)
+                    boson_found = True
 
-            mjj=0
+            #if (not boson_found):
+            #    for part in genParticles:
+
+
+
             if 'EWK' in self.process:
                 genJets = Collection(event, "GenJet")
                 #idx = 0
@@ -102,9 +116,11 @@ class nloSFProducer(Module):
                     mjj = (genJets[0].p4()+genJets[1].p4()).M()
                 
             nloSF = self._worker.getSF(boson_pt,mjj)
-
+            if boson_pt>0: self.counter += 1
 
         self.out.fillBranch("nloSF_%s"%(self.process),nloSF)
+        self.out.fillBranch("gen_boson_pt",boson_pt)
+        self.out.fillBranch("gen_mjj",mjj)
         return True
 
 # define modules using the syntax 'name = lambda : constructor' to avoid having them loaded when not needed
