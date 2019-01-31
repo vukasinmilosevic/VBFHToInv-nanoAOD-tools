@@ -14,3 +14,4 @@ p.run()
 print "DONE"
 os.system("ls -lR")
 
+#modules=[TriggerSelectionConstructor(),JetCleaningConstructor(),LooseMuonConstructor(),CRLooseMuonConstructor(),CRTightMuonConstructor(),LooseElectronConstructor(),CRLooseElectronConstructor(),CRTightElectronConstructor(),VLooseTauConstructor(),LoosePhotonConstructor(),MediumBJetConstructor(),MetCleaningConstructor_baseLooseLeptons(),DiCleanJetVariableConstructor(),CRDiMuonCreatorConstructor(),CRDiElectronCreatorConstructor(),CRSingleMuonCreatorConstructor(),CRSingleElectronCreatorConstructor(),SelectionCreatorConstructor()]

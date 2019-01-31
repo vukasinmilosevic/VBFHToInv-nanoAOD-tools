@@ -108,6 +108,7 @@ class nloSFProducer(Module):
                         if (mother.pdgId == 23 or abs(mother.pdgId) == 24):
                             boson_pt = mother.pt
                             boson_found = True
+                            break
                         else:
                             if (part.pdgId>0):
                                 lep1 = part
