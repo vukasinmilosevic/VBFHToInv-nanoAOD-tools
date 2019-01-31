@@ -18,6 +18,8 @@ class ObjectCleaning(Module):
         self.SFval = SFval
         self.SFerr = []
 
+        print ' -- INFO -- ObjectCleaning for %s: selection applied is: %s'%(outCollectionName,selection)
+
         if (SFerr is not None): 
             print 'SF %s: considering %d systematics: %s'%(SFname,len(SFerr),SFerr)
             for i in range(len(SFerr)):
@@ -131,15 +133,59 @@ class ObjectCleaning(Module):
 
 # define modules using the syntax 'name = lambda : constructor' to avoid having them loaded when not needed
 
-JetCleaningConstructor = lambda : ObjectCleaning(collectionName= "Jet", outCollectionName = "CleanJet", selection = 'abs(obj.eta) < 5.0 and ((obj.puId & 0x4) > 0) and ((abs(obj.eta)<=2.7 and ((obj.jetId & 0x4) > 0 )) or (abs(obj.eta) > 2.7 and ((obj.jetId & 0x2) > 0 )))',SFnamePrefix = None, SFname = None, SFval = None, SFerr = None)
-LooseMuonConstructor = lambda : ObjectCleaning(collectionName= "Muon", outCollectionName = "LooseMuon", selection = 'abs(obj.eta) < 2.4 and obj.pt > 10 and obj.pfRelIso04_all < 0.25',SFnamePrefix = 'Muon', SFname = 'effSF_Loose',SFval = None, SFerr = ['_systID','_systISO'] )
-CRLooseMuonConstructor = lambda : ObjectCleaning(collectionName= "Muon", outCollectionName = "CRLooseMuon", selection = 'abs(obj.eta) < 2.4 and obj.pt > 10 and obj.pfRelIso04_all < 0.25 and not(obj.tightId == 1 and obj.pfRelIso04_all < 0.15)',SFnamePrefix = 'Muon', SFname = 'effSF_Loose',SFval = None, SFerr = ['_systID','_systISO'] )
-CRTightMuonConstructor = lambda : ObjectCleaning(collectionName= "Muon", outCollectionName = "CRTightMuon", selection = 'abs(obj.eta) < 2.4 and obj.pt > 10 and obj.tightId == 1 and obj.pfRelIso04_all < 0.15',SFnamePrefix = 'Muon', SFname = 'effSF_Tight',SFval = None, SFerr = ['_systID','_systISO'] )
+#####################
+##### Jets
+#####################
 
-LooseElectronConstructor = lambda : ObjectCleaning(collectionName= "Electron", outCollectionName = "VetoElectron", selection = 'abs(obj.eta) < 2.5 and obj.pt > 10 and obj.cutBased > 0',SFnamePrefix = 'Electron', SFname = 'effSF_Veto',SFval = None, SFerr = ['_systRECO','_systRECOlowEt','_systIDISO'])
-CRLooseElectronConstructor = lambda : ObjectCleaning(collectionName= "Electron", outCollectionName = "CRVetoElectron", selection = 'abs(obj.eta) < 2.5 and obj.pt > 10 and obj.cutBased > 0  and obj.cutBased < 4',SFnamePrefix = 'Electron', SFname = 'effSF_Veto',SFval = None, SFerr = ['_systRECO','_systRECOlowEt','_systIDISO'])
-CRTightElectronConstructor = lambda : ObjectCleaning(collectionName= "Electron", outCollectionName = "CRTightElectron", selection = 'abs(obj.eta) < 2.5 and obj.pt > 10 and  obj.cutBased == 4',SFnamePrefix = 'Electron', SFname = 'effSF_Tight',SFval = None, SFerr = ['_systRECO','_systRECOlowEt','_systIDISO'])
+jetSelection = 'abs(obj.eta) < 5.0 and ((obj.puId & 0x4) > 0) and ((abs(obj.eta)<=2.7 and ((obj.jetId & 0x4) > 0 )) or (abs(obj.eta) > 2.7 and ((obj.jetId & 0x2) > 0 )))'
+JetCleaningConstructor = lambda : ObjectCleaning(collectionName= "Jet", outCollectionName = "CleanJet", selection = jetSelection, SFnamePrefix = None, SFname = None, SFval = None, SFerr = None)
 
-VLooseTauConstructor = lambda : ObjectCleaning(collectionName= "Tau", outCollectionName = "VLooseTau", selection = 'obj.pt > 18 and abs(obj.eta) < 2.3 and ((obj.idMVAoldDMdR032017v2 & 0x2) > 0) and (obj.idDecayMode > 0.5) and ((obj.idAntiEle & 0x2) > 0) and ((obj.idAntiMu & 0x1) > 0) and (abs(obj.dz)<0.2)',SFnamePrefix = None, SFname = None, SFval = [0.88,0.03], SFerr = ['']) 
-LoosePhotonConstructor = lambda : ObjectCleaning(collectionName= "Photon", outCollectionName = "LoosePhoton", selection = 'obj.pt > 15 and abs(obj.eta) < 2.5 and ((obj.cutBasedBitmap & 0x1)>0) and (obj.electronVeto > 0.5)',SFnamePrefix = None, SFname = None,SFval = None, SFerr = None)
-MediumBJetConstructor = lambda : ObjectCleaning(collectionName= "Jet", outCollectionName = "MediumBJet", selection = 'obj.pt > 20 and abs(obj.eta) < 2.5 and obj.btagDeepB > 0.4941',SFnamePrefix = 'Jet', SFname = 'btagSF',SFval = None, SFerr = [''])
+bjetSel = 'obj.pt > 20 and abs(obj.eta) < 2.5 and obj.btagDeepB > 0.4941'
+
+MediumBJetConstructor = lambda : ObjectCleaning(collectionName= "Jet", outCollectionName = "MediumBJet", selection = bjetSel,SFnamePrefix = 'Jet', SFname = 'btagSF',SFval = None, SFerr = [''])
+MediumBJetConstructorData = lambda : ObjectCleaning(collectionName= "Jet", outCollectionName = "MediumBJet", selection = bjetSel,SFnamePrefix = None, SFname = None,SFval = None, SFerr = None)
+
+#####################
+##### Muons
+#####################
+
+looseMuSel = 'abs(obj.eta) < 2.4 and obj.pt > 10 and obj.pfRelIso04_all < 0.25'
+tightMuSel = 'obj.tightId == 1 and obj.pfRelIso04_all < 0.15'
+LooseMuonConstructor = lambda : ObjectCleaning(collectionName= "Muon", outCollectionName = "LooseMuon", selection = looseMuSel, SFnamePrefix = 'Muon', SFname = 'effSF_Loose',SFval = None, SFerr = ['_systID','_systISO'] )
+CRLooseMuonConstructor = lambda : ObjectCleaning(collectionName= "Muon", outCollectionName = "CRLooseMuon", selection = looseMuSel+' and not('+tightMuSel+')',SFnamePrefix = 'Muon', SFname = 'effSF_Loose',SFval = None, SFerr = ['_systID','_systISO'] )
+CRTightMuonConstructor = lambda : ObjectCleaning(collectionName= "Muon", outCollectionName = "CRTightMuon", selection = looseMuSel+' and '+tightMuSel, SFnamePrefix = 'Muon', SFname = 'effSF_Tight',SFval = None, SFerr = ['_systID','_systISO'] )
+
+LooseMuonConstructorData = lambda : ObjectCleaning(collectionName= "Muon", outCollectionName = "LooseMuon", selection = looseMuSel, SFnamePrefix = None, SFname = None ,SFval = None, SFerr = None )
+CRLooseMuonConstructorData = lambda : ObjectCleaning(collectionName= "Muon", outCollectionName = "CRLooseMuon", selection = looseMuSel+' and not('+tightMuSel+')', SFnamePrefix = None, SFname = None ,SFval = None, SFerr = None )
+CRTightMuonConstructorData = lambda : ObjectCleaning(collectionName= "Muon", outCollectionName = "CRTightMuon", selection = looseMuSel+' and '+tightMuSel, SFnamePrefix = None, SFname = None ,SFval = None, SFerr = None )
+
+#####################
+##### Electrons
+#####################
+
+looseEleSel = 'abs(obj.eta) < 2.5 and obj.pt > 10 and obj.cutBased > 0'
+tightEleSel = 'obj.cutBased == 4'
+
+LooseElectronConstructor = lambda : ObjectCleaning(collectionName= "Electron", outCollectionName = "VetoElectron", selection = looseEleSel, SFnamePrefix = 'Electron', SFname = 'effSF_Veto',SFval = None, SFerr = ['_systRECO','_systRECOlowEt','_systIDISO'])
+CRLooseElectronConstructor = lambda : ObjectCleaning(collectionName= "Electron", outCollectionName = "CRVetoElectron", selection = looseEleSel+' and not ('+tightEleSel+')',SFnamePrefix = 'Electron', SFname = 'effSF_Veto',SFval = None, SFerr = ['_systRECO','_systRECOlowEt','_systIDISO'])
+CRTightElectronConstructor = lambda : ObjectCleaning(collectionName= "Electron", outCollectionName = "CRTightElectron", selection = looseEleSel+' and '+tightEleSel,SFnamePrefix = 'Electron', SFname = 'effSF_Tight',SFval = None, SFerr = ['_systRECO','_systRECOlowEt','_systIDISO'])
+
+LooseElectronConstructorData = lambda : ObjectCleaning(collectionName= "Electron", outCollectionName = "VetoElectron", selection = looseEleSel, SFnamePrefix = None, SFname = None,SFval = None, SFerr = None )
+CRLooseElectronConstructorData = lambda : ObjectCleaning(collectionName= "Electron", outCollectionName = "CRVetoElectron", selection = looseEleSel+' and not ('+tightEleSel+')', SFnamePrefix = None, SFname = None,SFval = None, SFerr = None )
+CRTightElectronConstructorData = lambda : ObjectCleaning(collectionName= "Electron", outCollectionName = "CRTightElectron", selection = looseEleSel+' and '+tightEleSel, SFnamePrefix = None, SFname = None,SFval = None, SFerr = None )
+
+######################
+##### Taus
+######################
+
+tauSel = 'obj.pt > 18 and abs(obj.eta) < 2.3 and ((obj.idMVAoldDMdR032017v2 & 0x2) > 0) and (obj.idDecayMode > 0.5) and ((obj.idAntiEle & 0x2) > 0) and ((obj.idAntiMu & 0x1) > 0) and (abs(obj.dz)<0.2)'
+
+VLooseTauConstructor = lambda : ObjectCleaning(collectionName= "Tau", outCollectionName = "VLooseTau", selection = tauSel,SFnamePrefix = None, SFname = None, SFval = [0.88,0.03], SFerr = ['']) 
+VLooseTauConstructorData = lambda : ObjectCleaning(collectionName= "Tau", outCollectionName = "VLooseTau", selection = tauSel,SFnamePrefix = None, SFname = None, SFval = None, SFerr = None) 
+
+######################
+##### Photons
+######################
+
+photonSel = 'obj.pt > 15 and abs(obj.eta) < 2.5 and ((obj.cutBasedBitmap & 0x1)>0) and (obj.electronVeto > 0.5)'
+LoosePhotonConstructor = lambda : ObjectCleaning(collectionName= "Photon", outCollectionName = "LoosePhoton", selection = photonSel,SFnamePrefix = None, SFname = None,SFval = None, SFerr = None)
