@@ -1,17 +1,33 @@
 import ROOT
 ROOT.PyConfig.IgnoreCommandLineOptions = True
-
+import math
 from PhysicsTools.NanoAODTools.postprocessing.framework.datamodel import Collection 
 from PhysicsTools.NanoAODTools.postprocessing.framework.datamodel import Object
 from PhysicsTools.NanoAODTools.postprocessing.framework.eventloop import Module
 from PhysicsTools.NanoAODTools.postprocessing.tools import *
 
+def CrossCleaning(obj_eta, obj_phi, cleanerObject_eta, cleanerObject_phi, label = "muon"):
+    dphi = deltaPhi(obj_phi, cleanerObject_phi)
+    deta = obj_eta-cleanerObject_eta
+    dR = math.sqrt(dphi**2+deta**2)
+    if dR<0.4:
+      # print "PROBLEMATIC object "+label+":"
+      # print "Jet eta = ", obj_eta, " phi = ", obj_phi
+      # print "Jet eta = ", cleanerObject_eta, " phi = ", cleanerObject_phi
+      # print "dR = ", dR
+       return False
+   # print "GOOD OBJECT, dR = ", dR
+    return True
+
+
+
 
 class ObjectCleaning(Module):
-    def __init__(self, collectionName, outCollectionName, selection, SFnamePrefix, SFname, SFval, SFerr=[]):
+    def __init__(self, collectionName, outCollectionName, selection, SFnamePrefix, SFname, SFval, SFerr=[], xcleaningCollectionNames = []):
         self.collectionName = collectionName
         self.outCollectionName = outCollectionName
         self.selection = selection
+        self.xcleaningCollectionNames = xcleaningCollectionNames
         self.SFnamePrefix = SFnamePrefix
         self.SFname = SFname
         self.doW = ( (SFnamePrefix is not None) or (SFname is not None) or (SFval is not None) )
@@ -19,7 +35,10 @@ class ObjectCleaning(Module):
         self.SFerr = []
 
         print ' -- INFO -- ObjectCleaning for %s: selection applied is: %s'%(outCollectionName,selection)
-
+        if len(xcleaningCollectionNames)>0:
+            print ' -- INFO -- CrossCleaning is done against following collections:'
+            for name in xcleaningCollectionNames:
+                print name
         if (SFerr is not None): 
             print 'SF %s: considering %d systematics: %s'%(SFname,len(SFerr),SFerr)
             for i in range(len(SFerr)):
@@ -66,19 +85,40 @@ class ObjectCleaning(Module):
         cleanObjs_mass = []
 
         objIdx = 0
+        #brojac = -1
         for obj in objs:
+           # brojac=brojac+1
             if not ( eval(self.selection) ):
                 #print ' ---- Loop: obj idx %d failed'%objIdx
                 objIdx += 1
+                #print " Jet ", str(brojac)," fails the Obj selection -- no crossCleaning"
                 continue
             #print ' ---- Loop: obj idx %d passed'%objIdx
 
+           #crossCleaning
+            xCleaned = True 
+	    if len(self.xcleaningCollectionNames)>0:
+                #print "Cleaning of Jet ", str(brojac)
+	        for xCleaningName in self.xcleaningCollectionNames:
+		    if not xCleaned:
+                        break
+                    xCleaningCollection = Collection(event, xCleaningName)
+                    #print "Cleaning of "+self.collectionName+" against "+xCleaningName, "size = ", len(xCleaningCollection)
+                    for xCleaningObj in xCleaningCollection:   
+            	    	 xCleaned =CrossCleaning(obj.eta, obj.phi, xCleaningObj.eta, xCleaningObj.phi, xCleaningName)
+                         if not xCleaned:
+                             #print "Object should fail"
+                             break
+            if not xCleaned:
+                continue
+                
+	    #print "Object is clean" 
             cleanObjs_idx.append(objIdx)
             cleanObjs_pt.append(obj.pt)
             cleanObjs_eta.append(obj.eta)
             cleanObjs_phi.append(obj.phi)
             cleanObjs_mass.append(obj.mass) 
-
+            
 #get scale factors
             if (self.doW):
                 #for w in SFweights:
@@ -139,6 +179,8 @@ class ObjectCleaning(Module):
 
 jetSelection = 'abs(obj.eta) < 5.0 and ((obj.puId & 0x4) > 0) and ((abs(obj.eta)<=2.7 and ((obj.jetId & 0x4) > 0 )) or (abs(obj.eta) > 2.7 and ((obj.jetId & 0x2) > 0 )))'
 JetCleaningConstructor = lambda : ObjectCleaning(collectionName= "Jet", outCollectionName = "CleanJet", selection = jetSelection, SFnamePrefix = None, SFname = None, SFval = None, SFerr = None)
+
+JetCleaningConstructorXCl = lambda : ObjectCleaning(collectionName= "Jet", outCollectionName = "CleanJet", selection = jetSelection, SFnamePrefix = None, SFname = None, SFval = None, SFerr = None, xcleaningCollectionNames = ["LooseMuon", "VetoElectron"])
 
 bjetSel = 'obj.pt > 20 and abs(obj.eta) < 2.5 and obj.btagDeepB > 0.4941'
 
