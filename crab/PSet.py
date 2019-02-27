@@ -18,9 +18,12 @@ process.source = cms.Source("PoolSource", fileNames = cms.untracked.vstring(),
 
 process.source.fileNames = [
 	#'/eos/user/a/amagnan/datatest.root' ##you can change only this line
-       #'/eos/user/a/amagnan/EWKZ2Jets_ZToLL_12Apr2018_94X_nanoAOD_test.root'
-    'root://xrootd.grid.hep.ph.ic.ac.uk///store/mc/RunIIFall17NanoAOD/DYJetsToLL_1J_TuneCP5_13TeV-amcatnloFXFX-pythia8/NANOAODSIM/PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/310000/68FC1A44-119B-E811-82C3-1866DA890A68.root'
-         #'root://cms-xrd-global.cern.ch//store/data/Run2017B/MET/NANOAOD/31Mar2018-v1/710000/D477E3DA-0A47-E811-8621-0CC47A4C8E98.root'
+      # '/eos/user/a/amagnan/EWKZ2Jets_ZToLL_12Apr2018_94X_nanoAOD_test.root'
+    # 'root://xrootd.grid.hep.ph.ic.ac.uk///store/mc/RunIIFall17NanoAOD/DYJetsToLL_1J_TuneCP5_13TeV-amcatnloFXFX-pythia8/NANOAODSIM/PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/310000/68FC1A44-119B-E811-82C3-1866DA890A68.root'
+     'root://cms-xrd-global.cern.ch//store/data/Run2017F/SingleMuon/NANOAOD/31Mar2018-v1/10000/024CDC46-4B45-E811-AD78-FA163ED70477.root'
+    #'root://cms-xrd-global.cern.ch//store/data/Run2017B/MET/NANOAOD/31Mar2018-v1/710000/D477E3DA-0A47-E811-8621-0CC47A4C8E98.root'
+#	'root://xrootd.grid.hep.ph.ic.ac.uk//store/mc/RunIIFall17NanoAOD/DYJetsToLL_M-50_HT-100to200_TuneCP5_13TeV-madgraphMLM-pythia8/NANOAODSIM/PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/80000/C0C53FFE-FDA8-E811-9E9C-0CC47A1DF60C.root'
+#	'/eos/user/v/vmilosev/DY100to200test.root'
 ]
 process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(1000))
 process.output = cms.OutputModule("PoolOutputModule", fileName = cms.untracked.string('tree.root'))

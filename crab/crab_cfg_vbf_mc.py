@@ -3,7 +3,7 @@ from CRABClient.UserUtilities import config, getUsernameFromSiteDB
 
 config = Configuration()
 
-myDate = '281118'
+myDate = '010219'
 
 config.section_("General")
 config.General.requestName = 'Full_MC_correction_'+myDate
@@ -23,7 +23,7 @@ config.Data.splitting = 'FileBased'
 config.Data.unitsPerJob = 1
 #config.Data.totalUnits = 1
 
-config.Data.outLFNDirBase = '/store/user/vmilosev/HIG_EXOv2_28112018'
+config.Data.outLFNDirBase = '/store/user/vmilosev/'+myDate
 config.Data.publication = False
 #config.Data.outputDatasetTag = 'NanoTestPost'
 config.section_("Site")
@@ -61,11 +61,8 @@ if 1 == 1:
     #Diboson
 
     tasks.append(('WW_TuneCP5','/WW_TuneCP5_13TeV-pythia8/RunIIFall17NanoAOD-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/NANOAODSIM'))
-    tasks.append(('WW_TuneCUETP8M1v2','/WW_TuneCUETP8M1_13TeV-pythia8/RunIIFall17NanoAOD-PUMoriond17_94X_mcRun2_asymptotic_v2-v1/NANOAODSIM'))
     tasks.append(('WZ_TuneCP5','/WZ_TuneCP5_13TeV-pythia8/RunIIFall17NanoAOD-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/NANOAODSIM'))
-    tasks.append(('WZ_TuneCUETP8M1v2','/WZ_TuneCUETP8M1_13TeV-pythia8/RunIIFall17NanoAOD-PUMoriond17_94X_mcRun2_asymptotic_v2-v1/NANOAODSIM'))
     tasks.append(('ZZ_TuneCP5','/ZZ_TuneCP5_13TeV-pythia8/RunIIFall17NanoAOD-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/NANOAODSIM'))
-    tasks.append(('ZZ_TuneCUETP8M1v2','/ZZ_TuneCUETP8M1_13TeV-pythia8/RunIIFall17NanoAOD-PUMoriond17_94X_mcRun2_asymptotic_v2-v1/NANOAODSIM'))
     
     
     #DY
@@ -143,17 +140,11 @@ if 1 == 1:
 	#WJetsToLnNu
 			
     tasks.append(('WJetsToLNu_HT-100To200_TuneCP5','/WJetsToLNu_HT-100To200_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIFall17NanoAOD-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/NANOAODSIM'))
-    tasks.append(('WJetsToLNu_HT-100To200_TuneCUETP8M1','/WJetsToLNu_HT-100To200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/RunIIFall17NanoAOD-PUMoriond17_94X_mcRun2_asymptotic_v2-v1/NANOAODSIM'))
-    tasks.append(('WJetsToLNu_HT-100To200_TuneCUETP8M1-ext','/WJetsToLNu_HT-100To200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/RunIIFall17NanoAOD-PUMoriond17_94X_mcRun2_asymptotic_v2_ext1-v1/NANOAODSIM'))
-    tasks.append(('WJetsToLNu_HT-100To200_TuneCUETP8M1-ext2','/WJetsToLNu_HT-100To200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/RunIIFall17NanoAOD-PUMoriond17_94X_mcRun2_asymptotic_v2_ext2-v1/NANOAODSIM'))
     tasks.append(('WJetsToLNu_HT-1200To2500_TuneCP5','/WJetsToLNu_HT-1200To2500_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIFall17NanoAOD-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/NANOAODSIM'))
     tasks.append(('WJetsToLNu_HT-200To400_TuneCP5','/WJetsToLNu_HT-200To400_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIFall17NanoAOD-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/NANOAODSIM'))
-    tasks.append(('WJetsToLNu_HT-200To400_TuneCUETP8M1-ext','/WJetsToLNu_HT-200To400_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/RunIIFall17NanoAOD-PUMoriond17_94X_mcRun2_asymptotic_v2_ext1-v1/NANOAODSIM'))
     tasks.append(('WJetsToLNu_HT-2500ToInf_TuneCP5','/WJetsToLNu_HT-2500ToInf_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIFall17NanoAOD-PU2017_12Apr2018_94X_mc2017_realistic_v14-v3/NANOAODSIM'))
     tasks.append(('WJetsToLNu_HT-400To600_TuneCP5','/WJetsToLNu_HT-400To600_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIFall17NanoAOD-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/NANOAODSIM'))
-    tasks.append(('WJetsToLNu_HT-400To600_TuneCUETP8M1','/WJetsToLNu_HT-400To600_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/RunIIFall17NanoAOD-PUMoriond17_94X_mcRun2_asymptotic_v2-v1/NANOAODSIM'))
     tasks.append(('WJetsToLNu_HT-600To800_TuneCP5','/WJetsToLNu_HT-600To800_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIFall17NanoAOD-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/NANOAODSIM'))
-    tasks.append(('WJetsToLNu_HT-70To100_TuneCUETP8M1','/WJetsToLNu_HT-70To100_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/RunIIFall17NanoAOD-PUMoriond17_94X_mcRun2_asymptotic_v2-v1/NANOAODSIM'))
     tasks.append(('WJetsToLNu_HT-800To1200_TuneCP5','/WJetsToLNu_HT-800To1200_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIFall17NanoAOD-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/NANOAODSIM'))
     
     #ZJetsToNuNu
@@ -171,7 +162,7 @@ if 1 == 1:
 	
     for task in tasks:
         print task[0]
-        config.General.requestName = task[0]+'_'+myDate
+        config.General.requestName = task[0]
         config.Data.inputDataset = task[1]
-        config.Data.outputDatasetTag = 'Nano_'+myDate+'_'+task[0]
+        config.Data.outputDatasetTag = 'MC_'+task[0]
         submit(config)
