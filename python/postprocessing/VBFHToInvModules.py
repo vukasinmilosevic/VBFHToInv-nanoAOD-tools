@@ -2,12 +2,19 @@
 import os
 
 #adding specific VBF variables to the trees
-from VBFHToInv.NanoAODTools.postprocessing.modules.dijetVar import DiJetVariableConstructor
-from VBFHToInv.NanoAODTools.postprocessing.modules.jetMetmindphi import JetMetMinDPhiConstructor
-from VBFHToInv.NanoAODTools.postprocessing.modules.MetCleaning import MetCleaningConstructor
+from VBFHToInv.NanoAODTools.postprocessing.modules.diobjVar import *
+from VBFHToInv.NanoAODTools.postprocessing.modules.metCleaning import *
+from VBFHToInv.NanoAODTools.postprocessing.modules.crCreator import *
+from VBFHToInv.NanoAODTools.postprocessing.modules.crDiLepCreator import *
+from VBFHToInv.NanoAODTools.postprocessing.modules.crSingleLepCreator import *
+from VBFHToInv.NanoAODTools.postprocessing.modules.selectionCreator import *
 from VBFHToInv.NanoAODTools.postprocessing.modules.lepSFProducer import lepSFtight
 from VBFHToInv.NanoAODTools.postprocessing.modules.lepSFProducer import lepSFveto
+from VBFHToInv.NanoAODTools.postprocessing.modules.nloSFProducer import nloSF
+from VBFHToInv.NanoAODTools.postprocessing.modules.bosonDecayFinder import bosonDecay
 from VBFHToInv.NanoAODTools.postprocessing.modules.trigger_selection import TriggerSelectionConstructor
+
+from VBFHToInv.NanoAODTools.postprocessing.modules.objectCleaning import *
 
 #btagging weights - give event weight automatically based on jets discri (so all working points automatically)
 from PhysicsTools.NanoAODTools.postprocessing.modules.btv.btagSFProducer import btagSFProducer 
@@ -30,3 +37,26 @@ puWeight2017 = lambda : puWeightProducer('auto',pufile_data,"pu_mc","pileup",ver
 from PhysicsTools.NanoAODTools.postprocessing.modules.jme.jetmetUncertainties import jetmetUncertainties2017All
 from PhysicsTools.NanoAODTools.postprocessing.modules.jme.jetmetUncertainties import jetmetUncertainties2017
 
+
+
+
+from PhysicsTools.NanoAODTools.postprocessing.modules.jme.jecUncertainties import jecUncertProducer
+jec_uncerts = [ "SubTotalPileUp",
+                "SubTotalRelative",
+                "SubTotalPt",
+                "SubTotalScale",
+                "SubTotalAbsolute",
+                "SubTotalMC",
+                "Total", ]
+jecUncert_2016_MC = lambda : jecUncertProducer('Summer16_23Sep2016V4_MC', jec_uncerts)
+jecUncert_2017_MC = lambda : jecUncertProducer('Fall17_17Nov2017_V6_MC', jec_uncerts)
+# Files from 2017 data already in nanoAOD-tools, but need to copy Summer16_23Sep2016*V3_DATA*.txt from cmgtools-lite/RootTools/data/jec/
+jecUncert_2016BCD_data = lambda : jecUncertProducer('Summer16_23Sep2016BCDV3_DATA', jec_uncerts)
+jecUncert_2016EF_data = lambda : jecUncertProducer('Summer16_23Sep2016EFV3_DATA', jec_uncerts)
+jecUncert_2016G_data = lambda : jecUncertProducer('Summer16_23Sep2016GV3_DATA', jec_uncerts)
+jecUncert_2016H_data = lambda : jecUncertProducer('Summer16_23Sep2016HV3_DATA', jec_uncerts)
+jecUncert_2017B_data = lambda : jecUncertProducer('Fall17_17Nov2017B_V6_DATA', jec_uncerts)
+jecUncert_2017C_data = lambda : jecUncertProducer('Fall17_17Nov2017C_V6_DATA', jec_uncerts)
+jecUncert_2017D_data = lambda : jecUncertProducer('Fall17_17Nov2017D_V6_DATA', jec_uncerts)
+jecUncert_2017E_data = lambda : jecUncertProducer('Fall17_17Nov2017E_V6_DATA', jec_uncerts)
+jecUncert_2017F_data = lambda : jecUncertProducer('Fall17_17Nov2017F_V6_DATA', jec_uncerts)

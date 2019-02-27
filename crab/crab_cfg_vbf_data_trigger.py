@@ -3,16 +3,16 @@ from CRABClient.UserUtilities import config, getUsernameFromSiteDB
 
 config = Configuration()
 
-myDate = '010219'
-
+myDate = '260219'
+version = 'v3'
 config.section_("General")
 config.General.requestName = 'Full_MET2017_dataset_'+myDate+'_filebased'
 config.General.transferLogs=True
 config.section_("JobType")
 config.JobType.pluginName = 'Analysis'
 config.JobType.psetName = 'PSet.py'
-config.JobType.scriptExe = 'crab_script_vbf_data.sh'
-config.JobType.inputFiles = ['crab_script_vbf_data.py','../../../PhysicsTools/NanoAODTools/scripts/haddnano.py','../data/pileup/Cert_294927-306462_13TeV_EOY2017ReReco_Collisions17_JSON_v1.txt'] #hadd nano will not be needed once nano tools are in cmssw
+config.JobType.scriptExe = 'crab_script_vbf_data_trigger.sh'
+config.JobType.inputFiles = ['crab_script_vbf_data_trigger.py','../../../PhysicsTools/NanoAODTools/scripts/haddnano.py','../data/pileup/Cert_294927-306462_13TeV_EOY2017ReReco_Collisions17_JSON_v1.txt'] #hadd nano will not be needed once nano tools are in cmssw
 config.JobType.sendPythonFolder	 = True
 config.section_("Data")
 #config.Data.inputDataset = '/DYJetsToLL_1J_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIIFall17NanoAOD-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/NANOAODSIM'
@@ -24,7 +24,7 @@ config.Data.unitsPerJob = 1
 #config.Data.unitsPerJob = 2
 #config.Data.totalUnits = 1
 
-config.Data.outLFNDirBase = '/store/user/vmilosev/'+myDate
+config.Data.outLFNDirBase = '/store/user/vmilosev/Trigger_skim_'+myDate
 config.Data.publication = False
 #config.Data.outputDatasetTag = 'NanoTestPost'
 config.section_("Site")
@@ -60,27 +60,22 @@ if 1 == 1:
 
     tasks=list()
     #Runs
-    tasks.append(('MET-2017B','/MET/Run2017B-31Mar2018-v1/NANOAOD'))
-    tasks.append(('MET-2017C','/MET/Run2017C-31Mar2018-v1/NANOAOD'))
-    tasks.append(('MET-2017D','/MET/Run2017D-31Mar2018-v1/NANOAOD'))
-    tasks.append(('MET-2017E','/MET/Run2017E-31Mar2018-v1/NANOAOD'))
-    tasks.append(('MET-2017F','/MET/Run2017F-31Mar2018-v1/NANOAOD'))
     
-    tasks.append(('SingleMuon-2017B','/SingleMuon/Run2017B-31Mar2018-v1/NANOAOD'))
-    tasks.append(('SingleMuon-2017C','/SingleMuon/Run2017C-31Mar2018-v1/NANOAOD'))
-    tasks.append(('SingleMuon-2017D','/SingleMuon/Run2017D-31Mar2018-v1/NANOAOD'))
-    tasks.append(('SingleMuon-2017E','/SingleMuon/Run2017E-31Mar2018-v1/NANOAOD'))
-    tasks.append(('SingleMuon-2017F','/SingleMuon/Run2017F-31Mar2018-v1/NANOAOD'))
-    
-    tasks.append(('SingleElectron-2017B','/SingleElectron/Run2017B-31Mar2018-v1/NANOAOD'))
-    tasks.append(('SingleElectron-2017C','/SingleElectron/Run2017C-31Mar2018-v1/NANOAOD'))
-    tasks.append(('SingleElectron-2017D','/SingleElectron/Run2017D-31Mar2018-v1/NANOAOD'))
-    tasks.append(('SingleElectron-2017E','/SingleElectron/Run2017E-31Mar2018-v1/NANOAOD'))
-    tasks.append(('SingleElectron-2017F','/SingleElectron/Run2017F-31Mar2018-v1/NANOAOD'))
+    tasks.append(('SingleMuon-2017B-trigger','/SingleMuon/Run2017B-31Mar2018-v1/NANOAOD'))
+    tasks.append(('SingleMuon-2017C-trigger','/SingleMuon/Run2017C-31Mar2018-v1/NANOAOD'))
+    tasks.append(('SingleMuon-2017D-trigger','/SingleMuon/Run2017D-31Mar2018-v1/NANOAOD'))
+    tasks.append(('SingleMuon-2017E-trigger','/SingleMuon/Run2017E-31Mar2018-v1/NANOAOD'))
+    tasks.append(('SingleMuon-2017F-trigger','/SingleMuon/Run2017F-31Mar2018-v1/NANOAOD'))
+   
+    tasks.append(('SingleElectron-2017B-trigger','/SingleElectron/Run2017B-31Mar2018-v1/NANOAOD'))
+    tasks.append(('SingleElectron-2017C-trigger','/SingleElectron/Run2017C-31Mar2018-v1/NANOAOD'))
+    tasks.append(('SingleElectron-2017D-trigger','/SingleElectron/Run2017D-31Mar2018-v1/NANOAOD'))
+    tasks.append(('SingleElectron-2017E-trigger','/SingleElectron/Run2017E-31Mar2018-v1/NANOAOD'))
+    tasks.append(('SingleElectron-2017F-trigger','/SingleElectron/Run2017F-31Mar2018-v1/NANOAOD')) 
  
     for task in tasks:
         print task[0]
-        config.General.requestName = task[0]
+        config.General.requestName = task[0]+version
         config.Data.inputDataset = task[1]
-        config.Data.outputDatasetTag = 'Data'+task[0]
+        config.Data.outputDatasetTag = 'Data'+task[0]+version
         submit(config)

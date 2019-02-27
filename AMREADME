@@ -96,3 +96,19 @@ https://twiki.cern.ch/twiki/bin/viewauth/CMS/Egamma2017DataRecommendations
 
 Count photons with pT>15 GeV, abseta<2.5, (Photon_cutBasedBitmap & 0x1)==1, Photon_electronVeto > 0.5
  
+
+*********************************************************
+*** Adding object filter and associated event weights ***
+*********************************************************
+
+- other module to produce necessary per object SF: ex lepSFProducer, central btagProducer.
+- module objectCleaning.
+- event weights labels as "Object_eventSelW" and "Object_eventVetoW", systematics with "systXX_up" and "systXX_down"
+- if object weights given as "weightname", "weightname_up" and "weightname_down", like from btag producer for example, it corresponds to global weights with asymmetrical uncertainties. Event weights are then directly products of those.
+- if object weight given as "weight", "weight_systXX", like lepSFproducer for example, corresponds to symmetrical +/- absolute uncertainty. Event weights are then calculated as products of "weight +/- systXX". 
+- AT the moemtn, the code will understand only these two options: SFname+"_up/down" or SFname+"_systXX".
+
+- arguments example:
+LooseMuonConstructor = lambda : ObjectCleaning(collectionName= "Muon", outCollectionName = "LooseMuon", selection = 'abs(obj.eta) < 2.4 and obj.pt > 10 and obj.pfRelIso04_all < 0.25',SFnamePrefix = 'Muon', SFname = 'effSF_Loose',SFval = None, SFerr = ['_systID','_systISO'] )
+- if weight is a tree variable -> give name in "SFname" , and error labels in "SFerr". Input tree variables for errors are assumed to be called with same SFname as prefix : SFname+SFerr...
+- if weight is a constant like for tauID -> give value and uncertainty in SFval, e.g. SFval = [0.88,0.03], and SFname = "None", SFerr = ['']. It is important to give an element to SFerr such that "up" and "down" errors are made.

@@ -14,11 +14,11 @@ LeptonEfficiencyCorrectorCppWorker::LeptonEfficiencyCorrectorCppWorker(std::vect
       continue;
     }
     TH2F *hist = (TH2F*)(f->Get(histos[i].c_str()))->Clone(("eff_"+histos[i]).c_str());
-    hist->SetDirectory(0);
     if(!hist) {
       std::cout << "ERROR! Histogram " << histos[i] << " not in file " << files[i] << ". Not considering this SF. " << std::endl;
       continue;
     } else {
+      hist->SetDirectory(0);
       std::cout << "Loading histogram " << histos[i] << " from file " << files[i] << "... " << std::endl;
     }
     effmaps_.push_back(hist);
@@ -41,14 +41,17 @@ float LeptonEfficiencyCorrectorCppWorker::getSF(int pdgid, float pt, float eta) 
   return out;
 }
 
-float LeptonEfficiencyCorrectorCppWorker::getSFErr(int pdgid, float pt, float eta) {
-  float out=1.;
+float LeptonEfficiencyCorrectorCppWorker::getSFErr(unsigned type, int pdgid, float pt, float eta) {
+  float out = 0;
   float x = pt;
   float y = abs(pdgid)==13 ? fabs(eta) : eta;
-  for(std::vector<TH2F*>::iterator hist=effmaps_.begin(); hist<effmaps_.end(); ++hist) {
-    WeightCalculatorFromHistogram wc(*hist);
-    out *= wc.getWeightErr(x,y);
+  if (type >= effmaps_.size()) {
+    std::cout << " Error, asking error type " << type << " out-of-bound" << std::endl;
+    return 0;
   }
+  TH2F* hist=effmaps_[type];
+  WeightCalculatorFromHistogram wc(hist);
+  out = wc.getWeightErr(x,y);
   return out;
 }
 
